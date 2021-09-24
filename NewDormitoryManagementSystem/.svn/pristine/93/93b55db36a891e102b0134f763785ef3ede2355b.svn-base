@@ -1,0 +1,8 @@
+jdbc_driver=com.mysql.jdbc.Driver
+jdbc_url=jdbc:mysql://localhost:3306/dormitory
+jdbc_user=root
+jdbc_password=admin
+project=D:/2018/project/DormitoryManagementSystem/src
+entity=com.sxau.dormitory.entity
+dao=com.sxau.dormitory.mapper
+driverPath=D:/2018/project/DormitoryManagementSystem/WebContent/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar

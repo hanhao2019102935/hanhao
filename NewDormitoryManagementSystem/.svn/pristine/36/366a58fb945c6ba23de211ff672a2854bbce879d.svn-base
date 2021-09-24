@@ -1,0 +1,18 @@
+package com.sxau.dormitory.biz;
+
+import java.util.List;
+
+import com.sxau.dormitory.entity.Maintain;
+
+public interface MaintainBiz {
+	//插入维修记录
+	public int insertMaintainRecord(Maintain record);
+	//根据学生ID查询维修记录 
+    public List<Maintain> selectByStudentId(Integer studentid);
+    //查询所有维修记录
+    public List<Maintain> selectAllMaintain(int start,int count);
+    //查询总页数
+    public int selectMaintainTotalPage();
+    //修改维修状态
+    public int updateByMaintainId(int maintainid);
+}

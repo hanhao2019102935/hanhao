@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>个人信息</title>
+
+<style type="text/css">
+.personalInfo{
+	width: 100%;
+	height: 350px;
+}
+.InfoTable{
+	width: 100px;
+	font-weight: 800;
+}
+
+</style>
+
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+	var userid = -1;
+	window.onload = function() {
+		userid = getCookie("userid");
+		showAdmin();
+
+	}
+	
+	function getCookie(cookieName) {
+		var cookieValue = "";
+		if (document.cookie && document.cookie != "") {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = cookies[i];
+				if (cookie.substring(0, cookieName.length + 2).trim() == cookieName
+						.trim()
+						+ "=") {
+					cookieValue = cookie.substring(cookieName.length + 2,
+							cookie.length);
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+	
+	function showAdmin() {
+		$.ajax({
+					url : "http://localhost:8080/DormitoryManagementSystem/admin/selectByUserId.do",
+					type : "post",
+					data : {
+						userid : userid
+					},
+					datatype : "text",
+					success : function(admin) {
+						console.log(admin);
+						console.log(admin.name);
+						var sex = '男';
+						var usertype = "管理员";
+						var education = "无";
+						if(admin.sex == 1){
+							sex = '女';
+						}
+						if(admin.usertype == 1){
+							usertype = '普通职员';
+						}
+						var adminEducation = admin.education;		
+						if(adminEducation == 0){
+							education = "博士研究生";
+						}else if(adminEducation == 1){
+							education = "硕士研究生";
+						}else if(adminEducation == 2){
+							education = "本科";
+						}else if(adminEducation == 3){
+							education = "大专";
+						}else{
+							education = "高中";
+						}
+						$("#username").html(admin.username);
+						$("#workerid").html(admin.workerid);
+						$("#usertype").html(usertype);
+						$("#name").html(admin.name);
+						$("#age").html(admin.age);
+						$("#sex").html(sex);
+						$("#education").html(education);		
+						
+					},
+					error : function(xhr) {
+						alert("错误提示m： " + xhr.status + " " + xhr.statusText);
+
+					}
+				});
+	}
+</script>
+
+
+</head>
+<body>
+<table border="0" class="personalInfo">
+
+<tr>
+<td class="InfoTable">用&nbsp;&nbsp;户&nbsp;&nbsp;名</td><td id="username"></td><td class="InfoTable">工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</td><td id="workerid"></td>
+</tr>
+
+<tr>
+<td  class="InfoTable">员工类型</td><td id="usertype"></td><td class="InfoTable">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</td><td id="name"></td>
+</tr>
+
+<tr>
+<td  class="InfoTable">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄</td><td id="age"></td><td  class="InfoTable">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</td><td id="sex"></td>
+</tr>
+
+<tr>
+<td  class="InfoTable">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历</td><td id="education"></td><td  class="InfoTable">操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</td><td><a href="">维护个人信息</a></td>
+</tr>
+
+</table>
+</body>
+</html>

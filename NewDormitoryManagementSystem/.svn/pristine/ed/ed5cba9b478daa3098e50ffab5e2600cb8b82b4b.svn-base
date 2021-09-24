@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title></title>
+		<link href="css/guid.css" rel='stylesheet' type='text/css' />
+	</head>
+
+	<body>
+		<div id="bodyDiv">
+			<div class="firstGuid" onclick="show('lb1')"><button>个人资料管理</button></div>
+				<ul id="lb1">
+					<a href="selfInfo.jsp" target="main"><li>个人资料</li></a>
+					<a href="updatePassword.jsp" target="main"><li>修改密码</li></a>
+				</ul>			
+			<div class="firstGuid" onclick="show('lb5')"><button>报修信息</button></div>
+				<ul id="lb5">
+					<a href="addMaintain.jsp" target="main"><li>申报维修</li></a>
+					<!-- <a href="" target="main"><li>我的维修申报</li></a> -->
+				</ul>
+			<div class="firstGuid" onclick="show('lb6')"><button>卫生评分</button></div>
+				<ul id="lb6">
+					<a href="#" target="main"><li>卫生展示</li></a>
+				</ul>
+			<div class="firstGuid" onclick="show('lb7')"><button>系统信息</button></div>
+				<ul id="lb7">
+					<a href="#" target="main"><li>系统信息</li></a>
+				</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		function show(obj){
+			if (document.getElementById(obj).style.display=="none") {
+				document.getElementById("lb1").style.display="none";
+				document.getElementById("lb5").style.display="none";
+				document.getElementById("lb6").style.display="none";
+				document.getElementById("lb7").style.display="none";					
+				document.getElementById(obj).style.display="block";
+			} else{
+				document.getElementById(obj).style.display="none";
+			}
+			
+		}
+	</script>
+</html>

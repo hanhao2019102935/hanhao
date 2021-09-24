@@ -1,0 +1,7 @@
+package com.sxau.dormitory.util;
+
+public class PageSizeUtil {
+	public static final int PAGE_SIZE = 9;
+	
+	public static final int PAGE_SIZE1 = 5;
+}

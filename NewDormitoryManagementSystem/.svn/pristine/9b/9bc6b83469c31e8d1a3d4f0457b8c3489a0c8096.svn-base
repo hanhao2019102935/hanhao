@@ -1,0 +1,101 @@
+package com.sxau.dormitory.biz.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sxau.dormitory.biz.StudentBiz;
+import com.sxau.dormitory.entity.Student;
+import com.sxau.dormitory.mapper.StudentMapper;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+@Service(value="studentBiz")
+public class StudentBizImpl implements StudentBiz {
+	@Autowired
+	private StudentMapper studentMapper;
+	
+	public StudentMapper getStudentMapper() {
+		return studentMapper;
+	}
+
+	public void setStudentMapper(StudentMapper studentMapper) {
+		this.studentMapper = studentMapper;
+	}
+
+	@Override
+	public int insertStudent(Student student) {
+		// TODO Auto-generated method stub
+		return studentMapper.insertSelective(student);
+	}
+
+	@Override
+	public List<Student> selectAllStudent() {
+		// TODO Auto-generated method stub
+		return studentMapper.selectAllStudent();
+	}
+
+	@Override
+	public int deleteByStudentId(Integer studentid) {
+		// TODO Auto-generated method stub
+		return studentMapper.deleteByStudentId(studentid);
+	}
+
+	@Override
+	public Student selectByStudentId(Integer studentid) {
+		// TODO Auto-generated method stub
+		return studentMapper.selectByStudentId(studentid);
+	}
+
+	@Override
+	public Student selectByStudentName(String studentName) {
+		// TODO Auto-generated method stub
+		return studentMapper.selectByStudentName(studentName);
+	}
+
+	//登录方法
+	@Override
+	public Student selectLoginStudent(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return studentMapper.selectLoginStudent(map);
+	}
+
+	@Override
+	public List<Student> selectStudentPage(int startIndex, int pageSize) {
+		// TODO Auto-generated method stub
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("startIndex", startIndex);
+		paramMap.put("pageSize", pageSize);
+		return studentMapper.selectStudentPage(paramMap);
+	}
+
+	@Override
+	public int selectStudentTotalPage() {
+		int totalPage = studentMapper.selectStudentTotalPage();
+		if(totalPage%PageSizeUtil.PAGE_SIZE==0){
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE;
+		}else{
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE+1;
+		}
+		return totalPage;
+	}
+
+	@Override
+	public int updateStudentById(Student student) {
+		return studentMapper.updateByPrimaryKeySelective(student);
+	}
+
+	@Override
+	public int updateManyDormitory(Map<String, Object> map) {
+		return studentMapper.updateManyDormitory(map);
+	}
+
+	@Override
+	public List<Student> selectByBuildingAndDormitory(Map<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return studentMapper.selectByBuildingAndDormitory(map);
+	}
+
+}

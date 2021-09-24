@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.ManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Manager" >
+    <id column="managerId" property="managerid" jdbcType="INTEGER" />
+    <result column="managerPhone" property="managerphone" jdbcType="VARCHAR" />
+    <result column="managerPassword" property="managerpassword" jdbcType="VARCHAR" />
+    <result column="managerName" property="managername" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    managerId, managerPhone, managerPassword, managerName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manager
+    where managerId = #{managerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager
+    where managerId = #{managerid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sxau.dormitory.entity.Manager" >
+    insert into manager (managerId, managerPhone, managerPassword, 
+      managerName)
+    values (#{managerid,jdbcType=INTEGER}, #{managerphone,jdbcType=VARCHAR}, #{managerpassword,jdbcType=VARCHAR}, 
+      #{managername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Manager" >
+    insert into manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="managerid != null" >
+        managerId,
+      </if>
+      <if test="managerphone != null" >
+        managerPhone,
+      </if>
+      <if test="managerpassword != null" >
+        managerPassword,
+      </if>
+      <if test="managername != null" >
+        managerName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="managerid != null" >
+        #{managerid,jdbcType=INTEGER},
+      </if>
+      <if test="managerphone != null" >
+        #{managerphone,jdbcType=VARCHAR},
+      </if>
+      <if test="managerpassword != null" >
+        #{managerpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="managername != null" >
+        #{managername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Manager" >
+    update manager
+    <set >
+      <if test="managerphone != null" >
+        managerPhone = #{managerphone,jdbcType=VARCHAR},
+      </if>
+      <if test="managerpassword != null" >
+        managerPassword = #{managerpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="managername != null" >
+        managerName = #{managername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where managerId = #{managerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Manager" >
+    update manager
+    set managerPhone = #{managerphone,jdbcType=VARCHAR},
+      managerPassword = #{managerpassword,jdbcType=VARCHAR},
+      managerName = #{managername,jdbcType=VARCHAR}
+    where managerId = #{managerid,jdbcType=INTEGER}
+  </update>
+</mapper>

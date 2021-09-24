@@ -1,0 +1,25 @@
+package com.sxau.dormitory.biz;
+
+import java.util.List;
+
+import com.sxau.dormitory.entity.Building;
+
+public interface BuildingBiz {
+	//查询所有的楼宇信息
+	public List<Building> selectAllBuilding();
+	
+	//根据ID查询楼宇信息
+	public Building selectByBuildingId(Integer buildingid);
+	
+	//添加楼宇的方法
+	public int insertBuilding (Building buidling);
+	
+	//根据buildingId删除楼宇
+	public int deleteByBuildingId(Integer buildingid);
+	
+	//修改楼宇信息的方法
+	public int updateBuilding(Building buidling);
+	
+	//根据楼宇名查询楼宇
+	public Building selectByBuildingName(String buildingname);
+}

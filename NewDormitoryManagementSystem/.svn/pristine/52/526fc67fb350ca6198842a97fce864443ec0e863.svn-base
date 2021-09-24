@@ -1,0 +1,47 @@
+package com.sxau.dormitory.biz.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sxau.dormitory.biz.ExcelBiz;
+import com.sxau.dormitory.entity.Student;
+import com.sxau.dormitory.entity.Vistor;
+import com.sxau.dormitory.mapper.StudentMapper;
+import com.sxau.dormitory.mapper.VistorMapper;
+@Service("excelBiz")
+public class ExcelBizImpl implements ExcelBiz {
+	@Autowired
+	private StudentMapper studentMapper;
+	@Autowired
+	private VistorMapper vistorMapper;
+		
+	public VistorMapper getVistorMapper() {
+		return vistorMapper;
+	}
+
+	public void setVistorMapper(VistorMapper vistorMapper) {
+		this.vistorMapper = vistorMapper;
+	}
+	
+	public StudentMapper getStudentMapper() {
+		return studentMapper;
+	}
+
+	public void setStudentMapper(StudentMapper studentMapper) {
+		this.studentMapper = studentMapper;
+	}
+
+	@Override
+	public List<Student> selectAllStudents() {
+		List<Student> studentList = studentMapper.selectAllStudents();
+		return studentList;
+	}
+	
+	@Override
+	public List<Vistor> selectAllVistor() {
+		List<Vistor> vistorList = vistorMapper.selectAllVistor();
+		return vistorList;
+	}
+}

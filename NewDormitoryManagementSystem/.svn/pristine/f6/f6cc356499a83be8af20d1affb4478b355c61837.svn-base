@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title></title>
+		<link href="css/guid.css" rel='stylesheet' type='text/css' />
+		<script type="text/javascript" src="js/guid.js"></script>
+	</head>
+
+	<body>
+		<div id="bodyDiv">
+			<div class="firstGuid" onclick="show('lb1')"><button>个人资料管理</button></div>
+				<ul id="lb1">
+					<a href="selfInfo.jsp" target="main"><li>个人资料</li></a>
+					<a href="updatePassword.jsp" target="main"><li>修改密码</li></a>
+				</ul>
+			<div class="firstGuid" onclick="show('lb2')"><button>楼宇管理</button></div>
+				<ul id="lb2">
+					<a href="building/showAllBuilding.do" target="main"><li>楼宇设置</li></a>
+					<a href="dormitory.jsp" target="main"><li>宿舍设置</li></a>
+					<!-- <a href="#" target="main"><li>宿舍信息</li></a>
+					<a href="#" target="main"><li>分配宿舍</li></a> -->
+				</ul>
+			<div class="firstGuid" onclick="show('lb3')"><button>学生管理</button></div>
+				<ul id="lb3">
+					<a href="addStudent.jsp" target="main"><li>添加学生</li></a>
+					<a href="selectStudent.jsp" target="main"><li>学生信息查询</li></a>
+					<a href="student/showAllStudent.do?page=1" target="main"><li>学生列表</li></a>					
+					<!-- <a href="#" target="main"><li>修改学生信息</li></a> -->
+				</ul>
+			<div class="firstGuid" onclick="show('lb4')"><button>访客管理</button></div>
+				<ul id="lb4">
+					<a href="vistor/showAllVistor.do?page=1" target="main"><li>访客列表</li></a>
+					<a href="addVistor.jsp" target="main"><li>访客登记</li></a>
+				</ul>
+			<div class="firstGuid" onclick="show('lb5')"><button>报修信息</button></div>
+				<ul id="lb5">
+					<a href="maintain/showMaintainList.do?page=1" target="main"><li>报修信息</li></a>
+				</ul>
+			<!-- <div class="firstGuid" onclick="show('lb6')"><button>卫生评分</button></div>
+				<ul id="lb6">
+					<a href="#" target="main"><li>卫生展示</li></a>
+				</ul>  -->
+			<div class="firstGuid" onclick="show('lb7')"><button>系统信息</button></div>
+				<ul id="lb7">
+					<a href="systemInfo.jsp" target="main"><li>系统信息</li></a>
+				</ul>
+		</div>
+	</body>
+</html>

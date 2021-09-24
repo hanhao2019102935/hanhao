@@ -1,0 +1,43 @@
+package com.sxau.dormitory.entity;
+
+public class Dormitory {
+    private Integer dormitoryid;
+
+    private String dormitoryname;
+
+    private Integer buildingid;
+
+    private Integer bedcount;
+
+    public Integer getDormitoryid() {
+        return dormitoryid;
+    }
+
+    public void setDormitoryid(Integer dormitoryid) {
+        this.dormitoryid = dormitoryid;
+    }
+
+    public String getDormitoryname() {
+        return dormitoryname;
+    }
+
+    public void setDormitoryname(String dormitoryname) {
+        this.dormitoryname = dormitoryname == null ? null : dormitoryname.trim();
+    }
+
+    public Integer getBuildingid() {
+        return buildingid;
+    }
+
+    public void setBuildingid(Integer buildingid) {
+        this.buildingid = buildingid;
+    }
+
+    public Integer getBedcount() {
+        return bedcount;
+    }
+
+    public void setBedcount(Integer bedcount) {
+        this.bedcount = bedcount;
+    }
+}

@@ -1,0 +1,55 @@
+package com.sxau.dormitory.biz.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sxau.dormitory.biz.VistorBiz;
+import com.sxau.dormitory.entity.Vistor;
+import com.sxau.dormitory.mapper.VistorMapper;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+@Service(value="vistorBiz")
+public class VistorBizImpl implements VistorBiz {
+	@Autowired
+	private VistorMapper vistorMapper;
+		
+	public VistorMapper getVistorMapper() {
+		return vistorMapper;
+	}
+
+	public void setVistorMapper(VistorMapper vistorMapper) {
+		this.vistorMapper = vistorMapper;
+	}
+
+	@Override
+	public int insertVistorRecord(Vistor record) {
+		// TODO Auto-generated method stub
+		return vistorMapper.insertVistorRecord(record);
+	}
+
+	@Override
+	public List<Vistor> selectVistorPage(int startIndex, int pageSize) {
+		// TODO Auto-generated method stub
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("startIndex", startIndex);
+		paramMap.put("pageSize", pageSize);
+		return vistorMapper.selectVistorPage(paramMap);
+	}
+
+	@Override
+	public int selectVistorTotalPage() {
+		// TODO Auto-generated method stub
+		int totalPage = vistorMapper.selectVistorTotalPage();
+		if(totalPage%PageSizeUtil.PAGE_SIZE==0){
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE;
+		}else{
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE+1;
+		}
+		return totalPage;
+	}
+
+}

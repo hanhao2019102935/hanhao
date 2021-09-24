@@ -1,0 +1,62 @@
+package com.sxau.dormitory.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.sxau.dormitory.biz.VistorBiz;
+import com.sxau.dormitory.entity.Vistor;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+@Controller
+@RequestMapping(value = "vistor")
+public class VistorController {
+	@Autowired
+	private VistorBiz vistorBiz;
+
+	public VistorBiz getVistorBiz() {
+		return vistorBiz;
+	}
+
+	public void setVistorBiz(VistorBiz vistorBiz) {
+		this.vistorBiz = vistorBiz;
+	}
+	
+	//插入访客记录
+	@RequestMapping(value = "addVistor")
+	public String insertVistorRecord(Vistor record){
+		vistorBiz.insertVistorRecord(record);
+		return "redirect:/vistor/showAllVistor.do";
+	}
+	
+	@RequestMapping(value = "showAllVistor")
+	public String showAllVistor(Map<String,Object> map,Integer page){
+		if(page==null){
+			page = 1;
+		}
+		Integer startIndex = (page-1)*PageSizeUtil.PAGE_SIZE;
+		Integer pageSize = PageSizeUtil.PAGE_SIZE;
+		List<Vistor> vistorList = vistorBiz.selectVistorPage(startIndex, pageSize);
+		int totalPage = vistorBiz.selectVistorTotalPage();
+		//List<Student> studentList = studentBiz.selectAllStudent();
+		int backpage = page-1;
+		int nextpage = page+1;
+		if(backpage==0){
+			backpage = 1;
+		}
+		if(nextpage>totalPage){
+			nextpage = totalPage;
+		}
+		map.put("vistorList", vistorList);
+		map.put("currentpage", page);
+		map.put("backpage", backpage);
+		map.put("nextpage", nextpage);
+		map.put("pageSize", pageSize);
+		map.put("totalPage", totalPage);
+		return "vistorInfo";
+	}
+
+}

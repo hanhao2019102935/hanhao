@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>假期申请页面</title>
+		<!-- Bootstrap core CSS -->
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			var userid = -1;
+			window.onload = function() {
+				userid = getCookie("userid");
+				selectVacation();
+			}
+
+
+			function getCookie(cookieName) {
+				var cookieValue = "";
+				if (document.cookie && document.cookie != "") {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = cookies[i];
+						if (cookie.substring(0, cookieName.length + 2).trim() == cookieName
+							.trim() +
+							"=") {
+							cookieValue = cookie.substring(cookieName.length + 2,
+								cookie.length);
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+
+
+			function selectVacation() {
+				$.ajax({
+					url: "http://localhost:8080/DormitoryManagementSystem/vacation/showMyVacation.do",
+					type: "post",
+					data: {
+						userid: userid
+					},
+					datatype: "text",
+					success: function(vacation) {
+						console.log(vacation);
+						for (var i = 0; i < vacation.length; i++) {
+							var trHtml = "<tr>" +
+								"<td>" + (i+1) + "</td>" +
+								"<td>" + vacation[i].applytime + "</td>" +
+								"<td>" + vacation[i].starttime + "</td>" +
+								"<td>" + vacation[i].endtime + "</td>" +
+								"<td>" + vacation[i].days + "</td>" +
+								"<td>" + vacation[i].aimplace + "</td>" +
+								"<td>" + vacation[i].isvacation + "</td>" +
+								"<td><a href='#'>销假</a></td></tr>";
+
+							$("#vacationTable").append(trHtml);
+						}
+
+					},
+					error: function(xhr) {
+						alert("错误提示m： " + xhr.status + " " + xhr.statusText);
+
+					}
+				});
+			}
+
+			function importAdmin() {
+
+				$("#importButton").attr("href", 'admin/importAdmin.do?education=' + educationSelected + '&sex=' + sexSelected +
+					'&usertype=' + usertypeSelected);
+			}
+		</script>
+	</head>
+	<body>
+		<div style="margin:30px;">
+			<table id="vacationTable" class="table table-hover">
+				<tr id="tableTitle">
+					<th>序号</th>
+					<th>申请时间</th>
+					<th>假期开始时间</th>
+					<th>假期结束时间</th>
+					<th>请假时长（天）</th>
+					<th>目的地</th>
+					<th>是否在假</th>
+					<th>销假操作</th>
+				</tr>
+			</table>
+		</div>
+		<div id="totalDiv"></div>
+	</body>
+</html>

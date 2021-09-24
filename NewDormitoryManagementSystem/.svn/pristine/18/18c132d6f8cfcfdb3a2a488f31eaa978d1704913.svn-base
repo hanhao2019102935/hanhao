@@ -1,0 +1,65 @@
+package com.sxau.dormitory.biz.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sxau.dormitory.biz.BuildingBiz;
+import com.sxau.dormitory.entity.Building;
+import com.sxau.dormitory.mapper.BuildingMapper;
+
+@Service(value="buildingBiz")
+public class BuildingBizImpl implements BuildingBiz {
+	@Autowired
+	private BuildingMapper buildingMapper;
+		
+	public BuildingMapper getBuildingMapper() {
+		return buildingMapper;
+	}
+
+	public void setBuildingMapper(BuildingMapper buildingMapper) {
+		this.buildingMapper = buildingMapper;
+	}
+
+	@Override
+	public List<Building> selectAllBuilding() {
+		// TODO Auto-generated method stub
+		return buildingMapper.selectAllBuilding();
+	}
+
+	@Override
+	public Building selectByBuildingId(Integer buildingid) {
+		// TODO Auto-generated method stub
+		return buildingMapper.selectByBuildingId(buildingid);
+	}
+
+	@Override
+	public int insertBuilding(Building building) {
+		// TODO Auto-generated method stub
+		return buildingMapper.insertBuilding(building);
+	}
+
+	@Override
+	public int deleteByBuildingId(Integer buildingid) {
+		// TODO Auto-generated method stub
+		int i = buildingMapper.deleteByBuildingId(buildingid);
+		return i;
+	}
+
+	@Override
+	public int updateBuilding(Building building) {
+		// TODO Auto-generated method stub
+		int i = buildingMapper.updateBuilding(building);
+		return i;
+	}
+
+	@Override
+	public Building selectByBuildingName(String buildingname) {
+		// TODO Auto-generated method stub		
+		return buildingMapper.selectByBuildingName(buildingname);
+	}
+	
+	
+
+}

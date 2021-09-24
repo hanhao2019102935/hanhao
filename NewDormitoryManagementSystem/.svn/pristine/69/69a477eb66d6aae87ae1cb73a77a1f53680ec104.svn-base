@@ -1,0 +1,103 @@
+@CHARSET "UTF-8";
+@media screen and (min-width: 0px) and (max-width: 1400px) {
+				html {
+					font-size: 55%;
+				}
+			}
+			
+			@media screen and (min-width: 1400px) and (max-width: 2000px) {
+				html {
+					font-size: 62.5%;
+				}
+			}
+			
+			html,body {
+				margin: 0px;
+				padding: 0px;
+				width: 100%;
+				height: 100%;
+			}
+			
+			#headDiv {
+				width: 100%;
+				height: 9%;
+				background-color: #426374;
+			}
+			
+			#bodyDiv {
+				width: 100%;
+				height: 79%;
+				background-image: url(../img/admin-login-bg.jpg);
+				background-position-x: 40%;
+				background-position-y: center;
+				background-size: 120% 190%;
+			}
+			
+			#footDiv {
+				margin-top: 0.1%;
+				width: 100%;
+				height: 11.8%;
+				background-color: #426374;
+			}
+			
+			p {
+				text-align: center;
+				line-height: 600%;
+				margin: 0px;
+				padding: 0px;
+				font-size: 1.2rem;
+				color: white;
+			}
+			
+			#box {
+				position: absolute;
+				margin-top: 6%;
+				margin-left: 28.5%;
+				padding-left: 5%;
+				padding-top: 3%;
+				width: 36%;
+				height: 47%;
+				background-image: url(../img/admin-loginform-bg.png);
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+			}		
+			.input {
+				
+				margin-left: 5%;
+				width: 85%;
+				height: 70%;
+				border: solid 1px #DCDCDC;
+				font-size: 1.75rem;
+			}
+			table{
+				height: 96%;
+				width: 90%;
+			}
+			td{
+				font-size: 1.65rem;
+				color: white;
+			}
+			.submit,.reset{
+				margin-left: 5%;
+				width: 30%;
+				height: 75%;
+				border-style: none;
+				font-size: 1.65rem;
+				border-radius: 12px;
+			}
+			.submit{
+				background-color: #5EB95E;
+				color: white;
+				
+			}
+			.loginMsg a{
+				color: white;
+				text-decoration: none;
+				font-size: 1.3rem;
+			}
+			select{
+				width:79%;
+				height: 70%;
+				border: solid 1px #DCDCDC;
+				font-size: 1.75rem;
+			}

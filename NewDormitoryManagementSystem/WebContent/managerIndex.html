@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>管理员页面</title>
+		<!-- Bootstrap core CSS -->
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			window.onload = function() {
+				selectAdmin();
+				importAdmin();
+			}
+
+			var educationSelected = $("#educationSelect option:selected").val();
+			var sexSelected = $("#sexSelect option:selected").val();
+			var usertypeSelected = $("#usertypeSelect option:selected").val();
+
+			function changeEducation() {
+				educationSelected = $("#educationSelect option:selected").val();
+				show();
+				selectAdmin();
+				importAdmin();
+			}
+
+			function changeSex() {
+				sexSelected = $("#sexSelect option:selected").val();
+				show();
+				selectAdmin();
+				importAdmin();
+			}
+
+			function changeUsertype() {
+				usertypeSelected = $("#usertypeSelect option:selected").val();
+				show();
+				selectAdmin();
+				importAdmin();
+			}
+
+			function show() {
+				console.log(usertypeSelected + "-" + sexSelected + "-" + educationSelected);
+			}
+
+			function selectAdmin() {
+				$.ajax({
+					url: "http://localhost:8080/DormitoryManagementSystem/admin/selectAdmin.do",
+					type: "post",
+					data: {
+						education: educationSelected,
+						sex: sexSelected,
+						usertype: usertypeSelected
+					},
+					datatype: "text",
+					success: function(admin) {
+						$("#tableTitle").siblings().remove();
+						console.log(admin);
+						for (var i = 0; i < admin.length; i++) {
+							var sex = '男';
+							var usertype = "管理员";
+							var education = "无";
+							if (admin[i].sex == 1) {
+								sex = '女';
+							}
+							if (admin[i].usertype == 1) {
+								usertype = '普通职员';
+							}
+							var adminEducation = admin[i].education;
+							if (adminEducation == 0) {
+								education = "博士研究生";
+							} else if (adminEducation == 1) {
+								education = "硕士研究生";
+							} else if (adminEducation == 2) {
+								education = "本科";
+							} else if (adminEducation == 3) {
+								education = "大专";
+							} else {
+								education = "高中";
+							}
+							var trHtml = "<tr>" +
+								"<td>" + admin[i].userid + "</td>" +
+								"<td>" + admin[i].username + "</td>" +
+								"<td>" + usertype + "</td>" +
+								"<td>" + admin[i].name + "</td>" +
+								"<td>" + admin[i].age + "</td>" +
+								"<td>" + sex + "</td>" +
+								"<td>" + education + "</td></tr>";
+							$("#personTable").append(trHtml);
+						}
+						$("#totalDiv").html("共" + admin.length + "条");
+
+					},
+					error: function(xhr) {
+						alert("错误提示m： " + xhr.status + " " + xhr.statusText);
+
+					}
+				});
+			}
+
+			function importAdmin() {
+
+				$("#importButton").attr("href", 'admin/importAdmin.do?education=' + educationSelected + '&sex=' + sexSelected +
+					'&usertype=' + usertypeSelected);
+			}
+		</script>
+	</head>
+	<body>
+		<div style="margin:30px;">
+			<div style="margin-bottom: 15px;">
+				<a id="importButton" href=""><button type="button" class="btn btn-primary">导出员工信息</button></a>
+			</div>
+			<div>
+
+				<table id="personTable" class="table table-hover">
+					<tr id="tableTitle">
+						<th>ID</th>
+						<th>工号</th>
+						<th>
+							<select id="usertypeSelect" onchange="changeUsertype()">
+								<option value="">员工类别</option>
+								<option value="1">普通员工</option>
+								<option value="0">管理员</option>
+							</select>
+						</th>
+						<th>姓名</th>
+						<th>年龄</th>
+						<th>
+							<select id="sexSelect" onchange="changeSex()">
+								<option value="">性别</option>
+								<option value="1">女</option>
+								<option value="0">男</option>
+							</select>
+
+						</th>
+						<th>
+							<select id="educationSelect" onchange="changeEducation()">
+								<option value="">学历</option>
+								<option value="4">高中</option>
+								<option value="3">大专</option>
+								<option value="2">本科</option>
+								<option value="1">硕士研究生</option>
+								<option value="0">博士研究生</option>
+							</select>
+						</th>
+					</tr>
+
+				</table>
+
+
+			</div>
+			<div id="totalDiv"></div>
+		</div>
+
+	</body>
+</html>

@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+
+function show(obj){
+				if (document.getElementById(obj).style.display=="none") {
+					document.getElementById("lb1").style.display="none";
+					document.getElementById("lb2").style.display="none";
+					document.getElementById("lb3").style.display="none";
+					document.getElementById("lb4").style.display="none";
+					document.getElementById("lb5").style.display="none";
+					//document.getElementById("lb6").style.display="none";
+					document.getElementById("lb7").style.display="none";					
+					document.getElementById(obj).style.display="block";
+				} else{
+					document.getElementById(obj).style.display="none";
+				}
+				
+			}
+

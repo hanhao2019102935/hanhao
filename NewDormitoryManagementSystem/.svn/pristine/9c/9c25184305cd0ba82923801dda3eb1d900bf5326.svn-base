@@ -1,0 +1,36 @@
+package com.sxau.dormitory.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import com.sxau.dormitory.entity.Admin;
+
+public interface AdminMapper {
+    int deleteByPrimaryKey(Integer adminid);
+
+    int insert(Admin record);
+
+    int insertSelective(Admin record);
+
+    Admin selectByPrimaryKey(Integer adminid);
+
+    int updateByPrimaryKeySelective(Admin record);
+
+    int updateByPrimaryKey(Admin record);
+    
+    //楼管注册的方法
+    int insertAdmin(Admin admin);
+    
+    //楼管登录的方法
+    Admin selectLoginAdmin(Map<String, String> map);
+    
+    //修改楼管的方法
+    int updateByAdminId(Admin admin);
+    
+    //根据buildingId查询宿管信息
+    List<Admin> selectByBuildingId(Integer buildingId);
+    
+    //查询所有宿管信息
+    List<Admin> selectAllAdmin();
+    
+}

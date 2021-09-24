@@ -1,0 +1,86 @@
+package com.sxau.dormitory.entity;
+
+import java.util.Date;
+
+public class Maintain {
+    private Integer maintainid;
+
+    private Date subtime;
+
+    private Date maintaintime;
+
+    private Integer maintainstatu;
+
+    private String maintaincomment;
+
+    private String studentid;
+
+    private Integer dormitoryid;
+
+    private Integer buildingid;
+
+    public Integer getMaintainid() {
+        return maintainid;
+    }
+
+    public void setMaintainid(Integer maintainid) {
+        this.maintainid = maintainid;
+    }    
+
+    public Date getSubtime() {
+		return subtime;
+	}
+
+	public void setSubtime(Date subtime) {
+		this.subtime = subtime;
+	}
+
+	public Date getMaintaintime() {
+		return maintaintime;
+	}
+
+	public void setMaintaintime(Date maintaintime) {
+		this.maintaintime = maintaintime;
+	}
+	
+
+    public Integer getMaintainstatu() {
+		return maintainstatu;
+	}
+
+	public void setMaintainstatu(Integer maintainstatu) {
+		this.maintainstatu = maintainstatu;
+	}
+
+	public String getMaintaincomment() {
+        return maintaincomment;
+    }
+
+    public void setMaintaincomment(String maintaincomment) {
+        this.maintaincomment = maintaincomment == null ? null : maintaincomment.trim();
+    }
+
+    public String getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(String studentid) {
+        this.studentid = studentid == null ? null : studentid.trim();
+    }
+
+    public Integer getDormitoryid() {
+        return dormitoryid;
+    }
+
+    public void setDormitoryid(Integer dormitoryid) {
+        this.dormitoryid = dormitoryid;
+    }
+
+    public Integer getBuildingid() {
+        return buildingid;
+    }
+
+    public void setBuildingid(Integer buildingid) {
+        this.buildingid = buildingid;
+    }
+}

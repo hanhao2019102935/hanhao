@@ -1,0 +1,80 @@
+package com.sxau.dormitory.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.sxau.dormitory.biz.MaintainBiz;
+import com.sxau.dormitory.entity.Maintain;
+import com.sxau.dormitory.entity.Vistor;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+
+@Controller
+@RequestMapping(value = "maintain")
+public class MaintainController {
+	@Autowired
+	private MaintainBiz maintainBiz;
+
+	public MaintainBiz getMaintainBiz() {
+		return maintainBiz;
+	}
+
+	public void setMaintainBiz(MaintainBiz maintainBiz) {
+		this.maintainBiz = maintainBiz;
+	}
+
+	// 插入维修记录的方法
+	@RequestMapping(value = "addMaintain")
+	public String addMaintain(Maintain maintain) {
+		maintain.setMaintainstatu(1);
+		maintainBiz.insertMaintainRecord(maintain);
+		return "addMaintain";
+	}
+	
+	// 查询维修记录的方法
+	@RequestMapping(value = "showMyMaintain")
+	public String showMyMaintain(int studentid,Map<String,Object> resMap) {
+		List<Maintain> maintainList = maintainBiz.selectByStudentId(studentid);
+		resMap.put("maintainList",maintainList);
+		return "myMaintain";
+	}
+	
+	// 修改维修记录状态的方法
+	@RequestMapping(value = "updateMaintain")
+	public String updateMaintain(int maintainid) {
+		maintainBiz.updateByMaintainId(maintainid);
+		return "redirect:/maintain/showMaintainList.do";
+	}
+	
+	// 查询所有维修记录的方法
+	@RequestMapping(value = "showMaintainList")
+	public String showAllVistor(Map<String,Object> map,Integer page){
+		if(page==null){
+			page = 1;
+		}
+		Integer startIndex = (page-1)*PageSizeUtil.PAGE_SIZE;
+		Integer pageSize = PageSizeUtil.PAGE_SIZE;
+		List<Maintain> MaintainList = maintainBiz.selectAllMaintain(startIndex, pageSize);
+		System.out.println("----------------------"+MaintainList+"--------------------------");
+		int totalPage = maintainBiz.selectMaintainTotalPage();
+		int backpage = page-1;
+		int nextpage = page+1;
+		if(backpage==0){
+			backpage = 1;
+		}
+		if(nextpage>totalPage){
+			nextpage = totalPage;
+		}
+		map.put("maintainList", MaintainList);
+		map.put("currentpage", page);
+		map.put("backpage", backpage);
+		map.put("nextpage", nextpage);
+		map.put("pageSize", pageSize);
+		map.put("totalPage", totalPage);
+		return "maintainList";
+	}
+}

@@ -1,0 +1,147 @@
+package com.sxau.dormitory.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sxau.dormitory.biz.StudentBiz;
+import com.sxau.dormitory.entity.Admin;
+import com.sxau.dormitory.entity.Dormitory;
+import com.sxau.dormitory.entity.Student;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+@Controller
+@RequestMapping(value = "student")
+public class StudentController {
+	@Autowired
+	private StudentBiz studentBiz;
+
+	public StudentBiz getStudentBiz() {
+		return studentBiz;
+	}
+
+	public void setStudentBiz(StudentBiz studentBiz) {
+		this.studentBiz = studentBiz;
+	}
+	
+	@RequestMapping(value = "showAllStudent")
+	public String showAllStudent(Map<String,Object> map,Integer page){
+		if(page==null){
+			page = 1;
+		}
+		Integer startIndex = (page-1)*PageSizeUtil.PAGE_SIZE;
+		Integer pageSize = PageSizeUtil.PAGE_SIZE;
+		List<Student> studentList = studentBiz.selectStudentPage(startIndex, pageSize);
+		int totalPage = studentBiz.selectStudentTotalPage();
+		//List<Student> studentList = studentBiz.selectAllStudent();
+		int backpage = page-1;
+		int nextpage = page+1;
+		if(backpage==0){
+			backpage = 1;
+		}
+		if(nextpage>totalPage){
+			nextpage = totalPage;
+		}
+		map.put("studentList", studentList);
+		map.put("currentpage", page);
+		map.put("backpage", backpage);
+		map.put("nextpage", nextpage);
+		map.put("pageSize", pageSize);
+		map.put("totalPage", totalPage);
+		return "studentInfo";
+	}
+	@Test
+	public void test(){
+		List<Student> studentList = studentBiz.selectStudentPage(1, 5);
+		System.out.println(studentList);
+	}
+	
+	@RequestMapping(value = "addStudent")
+	public String insertStudent(Student student){
+		studentBiz.insertStudent(student);
+		return "redirect:/student/showAllStudent.do";
+	}
+	
+	@RequestMapping(value = "deleteStudent")
+	public String deleteStudent(Integer studentid){
+		studentBiz.deleteByStudentId(studentid);
+		return "redirect:/student/showAllStudent.do";
+	}
+	@RequestMapping(value = "updateStudent")
+	public String updateStudent(Student student){
+		studentBiz.updateStudentById(student);
+		return "redirect:/student/showAllStudent.do";
+	}
+	
+	@RequestMapping(value="showUpdateStudent")
+	public String showUpdateStudent(Integer studentid,HttpSession session){
+		Student updateStudent = studentBiz.selectByStudentId(studentid);
+		session.setAttribute("updateStudent", updateStudent);
+		return "updateStudent";
+	}
+	
+	@RequestMapping(value="selectByStudentName")
+	public String selectByStudentName(String studentname,HttpSession session){
+		System.out.println(studentname);
+		Student selectStudent = studentBiz.selectByStudentName(studentname);
+		session.setAttribute("selectStudent", selectStudent);
+		return "oneStudentInfo";
+	}
+	
+	//根据学生ID查询学生信息
+	@RequestMapping(value="selectByStudentID")
+	public String selectByStudentID(int studentid,HttpSession session){
+		Student selectStudent = studentBiz.selectByStudentId(studentid);
+		session.setAttribute("selectStudent", selectStudent);
+		return "";
+	}
+	
+	//批量分配宿舍
+	@RequestMapping(value="updateManyDormitory")
+	public String updateManyDormitory(Student student,String ids){
+		String[] idArray = ids.split(",");
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("student", student);
+		map.put("ids", idArray);
+		studentBiz.updateManyDormitory(map);
+		return "redirect:/student/showAllStudent.do";
+	}
+	
+	//根据楼宇号和宿舍号查找该宿舍住的学生
+	@RequestMapping(value="selectByBuildingAndDormitory")
+	@ResponseBody
+	public List<Student> selectByBuildingAndDormitory(int buildingid,int dormitoryid){
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("buildingid", buildingid);		
+		map.put("dormitoryid", dormitoryid);
+		List<Student> studentList = studentBiz.selectByBuildingAndDormitory(map);
+		return studentList;
+	}
+	
+	// 学生修改密码的方法
+	@RequestMapping(value = "updatePassword")
+	public String updatePassword(Student record, HttpSession session) {
+		Student student = (Student) session.getAttribute("student");
+		record.setBuildingid(student.getBuildingid());
+		record.setDormitoryid(student.getDormitoryid());
+		record.setInstitute(student.getInstitute());
+		record.setMajor(student.getMajor());
+		record.setStudentname(student.getStudentname());
+		record.setStudentpassword(record.getStudentpassword());
+		record.setStudentsex(student.getStudentsex());
+		record.setStudyid(student.getStudyid());
+		record.setStudentpassword(record.getStudentpassword());
+		studentBiz.updatePasswordById(record);
+		String msg = "密码修改成功！";
+		session.setAttribute("msg", msg);
+		return "message";
+	}
+}

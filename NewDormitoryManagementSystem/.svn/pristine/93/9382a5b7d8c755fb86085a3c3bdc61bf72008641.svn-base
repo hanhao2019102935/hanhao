@@ -1,0 +1,32 @@
+package com.sxau.dormitory.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import com.sxau.dormitory.entity.Student;
+import com.sxau.dormitory.entity.Vistor;
+
+public interface VistorMapper {
+    int deleteByPrimaryKey(Integer vistorid);
+
+    int insert(Vistor record);
+
+    int insertSelective(Vistor record);
+
+    Vistor selectByPrimaryKey(Integer vistorid);
+
+    int updateByPrimaryKeySelective(Vistor record);
+
+    int updateByPrimaryKey(Vistor record);
+    
+    int insertVistorRecord(Vistor record);
+    
+    //分页查询
+    List<Vistor> selectVistorPage(Map<String, Integer> map);
+    
+    //查询学生总页数
+    int selectVistorTotalPage();
+    
+    //excel查询所有访客信息
+    public List<Vistor> selectAllVistor();
+}

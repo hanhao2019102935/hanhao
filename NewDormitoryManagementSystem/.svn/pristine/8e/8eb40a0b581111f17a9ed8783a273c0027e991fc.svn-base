@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.DormitoryMapper" >
+  <resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Dormitory" >
+    <id column="dormitoryId" property="dormitoryid" jdbcType="INTEGER" />
+    <result column="dormitoryName" property="dormitoryname" jdbcType="VARCHAR" />
+    <result column="buildingId" property="buildingid" jdbcType="INTEGER" />
+    <result column="bedCount" property="bedcount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dormitoryId, dormitoryName, buildingId, bedCount
+  </sql>
+  
+  <!-- 生成宿舍的方法 -->
+  <insert id="insertDormitory" parameterType="com.sxau.dormitory.entity.Dormitory" >
+    insert into dormitory (dormitoryId, dormitoryName, buildingId, 
+      bedCount)
+    values (#{dormitoryid,jdbcType=INTEGER}, #{dormitoryname,jdbcType=VARCHAR}, #{buildingid,jdbcType=INTEGER}, 
+      #{bedcount,jdbcType=INTEGER})
+  </insert>
+  
+  <!-- 根据楼宇Id分页查找宿舍 -->
+  <select id="selectByBuildingId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from dormitory
+    where buildingId = #{buildingid,jdbcType=INTEGER}
+    order by dormitoryName asc
+    limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 根据楼宇Id查询宿舍总页数 -->
+  <select id="selectByBuildingIdTotalPage" resultType="int" parameterType="java.lang.Integer" >
+    select count(1)
+    from dormitory
+    where buildingId = #{buildingid,jdbcType=INTEGER}
+  </select>
+  <!-- 根据楼层数查询所有宿舍 -->
+  <select id="findAllDormitory" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from dormitory
+    where buildingId = #{buildingid} and dormitoryName like '${floorCount}%' 
+  </select>
+  <!-- 根据楼层数查询所有宿舍并分页-->
+  <select id="selectByBuildingIdAndCurrentFloor" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from dormitory
+    where buildingId = #{buildingid} and dormitoryName like '${currentFloor}%'
+    limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 根据楼层数查询所有宿舍并分页查询总页数 -->
+  <select id="selectPagesByBuildingIdAndCurrentFloor" resultType="int" parameterType="java.util.Map" >
+    select count(1)
+    from dormitory
+    where buildingId = #{buildingid} and dormitoryName like '${currentFloor}%'
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dormitory
+    where dormitoryId = #{dormitoryid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dormitory
+    where dormitoryId = #{dormitoryid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sxau.dormitory.entity.Dormitory" >
+    insert into dormitory (dormitoryId, dormitoryName, buildingId, 
+      bedCount)
+    values (#{dormitoryid,jdbcType=INTEGER}, #{dormitoryname,jdbcType=VARCHAR}, #{buildingid,jdbcType=INTEGER}, 
+      #{bedcount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Dormitory" >
+    insert into dormitory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dormitoryid != null" >
+        dormitoryId,
+      </if>
+      <if test="dormitoryname != null" >
+        dormitoryName,
+      </if>
+      <if test="buildingid != null" >
+        buildingId,
+      </if>
+      <if test="bedcount != null" >
+        bedCount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dormitoryid != null" >
+        #{dormitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="dormitoryname != null" >
+        #{dormitoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingid != null" >
+        #{buildingid,jdbcType=INTEGER},
+      </if>
+      <if test="bedcount != null" >
+        #{bedcount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Dormitory" >
+    update dormitory
+    <set >
+      <if test="dormitoryname != null" >
+        dormitoryName = #{dormitoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingid != null" >
+        buildingId = #{buildingid,jdbcType=INTEGER},
+      </if>
+      <if test="bedcount != null" >
+        bedCount = #{bedcount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where dormitoryId = #{dormitoryid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Dormitory" >
+    update dormitory
+    set dormitoryName = #{dormitoryname,jdbcType=VARCHAR},
+      buildingId = #{buildingid,jdbcType=INTEGER},
+      bedCount = #{bedcount,jdbcType=INTEGER}
+    where dormitoryId = #{dormitoryid,jdbcType=INTEGER}
+  </update>
+</mapper>

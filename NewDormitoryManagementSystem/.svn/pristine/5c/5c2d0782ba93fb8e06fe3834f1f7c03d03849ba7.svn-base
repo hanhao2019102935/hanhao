@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Student" >
+    <id column="studentId" property="studentid" jdbcType="INTEGER" />
+    <result column="studyId" property="studyid" jdbcType="VARCHAR" />
+    <result column="buildingId" property="buildingid" jdbcType="INTEGER" />
+    <result column="dormitoryId" property="dormitoryid" jdbcType="INTEGER" />
+    <result column="studentPassword" property="studentpassword" jdbcType="VARCHAR" />
+    <result column="studentName" property="studentname" jdbcType="VARCHAR" />
+    <result column="studentSex" property="studentsex" jdbcType="VARCHAR" />
+    <result column="institute" property="institute" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="findStudentResultMap" type="com.sxau.dormitory.entity.Student" extends="BaseResultMap">
+  	<association property="dormitory" javaType="com.sxau.dormitory.entity.Dormitory">
+  		 <id column="d_dormitoryId" property="dormitoryid" jdbcType="INTEGER" />
+    	<result column="dormitoryName" property="dormitoryname" jdbcType="VARCHAR" />
+  	</association>
+  	<association property="building" javaType="com.sxau.dormitory.entity.Building">
+  		<id column="b_buildingId" property="buildingid" jdbcType="INTEGER" />
+		<result column="buildingName" property="buildingname" jdbcType="VARCHAR" />
+  	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    studentId, studyId, buildingId, dormitoryId, studentPassword, studentName, studentSex, 
+    institute, major
+  </sql>
+ 
+ <!--  Excel查询所有学生 -->
+ <select id="selectAllStudents" resultMap="findStudentResultMap" >
+    select s.* ,d.dormitoryId d_dormitoryId,d.dormitoryName,b.buildingId b_buildingId,b.buildingName
+    from student s
+    left join building b on s.buildingId = b.buildingId
+    left join dormitory d on s.dormitoryId = d.dormitoryId
+  </select>
+ <!-- 根据楼宇和宿舍查询学生信息 -->
+  <select id="selectByBuildingAndDormitory" resultMap="BaseResultMap" parameterType="INTEGER" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where buildingId = #{buildingid,jdbcType=INTEGER} and dormitoryId = #{dormitoryid,jdbcType=INTEGER}
+  </select> 
+ 
+  <!-- 根据姓名查询学生信息 -->
+  <select id="selectByStudentName" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where studentName = #{studentname,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据ID查询学生信息 -->
+  <select id="selectByStudentId" resultMap="findStudentResultMap" parameterType="java.lang.Integer" >
+    select s.*,d.dormitoryName, b.buildingName
+    from student s
+    inner join building b on s.buildingId=b.buildingId
+    inner join dormitory d on s.buildingId=d.buildingId and s.dormitoryId=d.dormitoryId
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 批量分配宿舍 -->
+  <update id="updateManyDormitory"  parameterType="java.util.Map" >
+    update student set buildingId = #{student.buildingid} , dormitoryId = #{student.dormitoryid} where studentId in
+    <foreach collection="ids" item="id" close=")" open="(" separator=",">
+    	#{id}
+    </foreach>
+  </update>
+  
+  <!-- 学生登录的方法 -->
+  <select id="selectLoginStudent" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where studyid = #{studyid} and studentPassword = #{studentpassword}
+  </select>
+  
+  <!-- 插入学生的方法 -->
+  <insert id="insertStudent" parameterType="com.sxau.dormitory.entity.Student" >
+    insert into student (studentId, studyId, buildingId, 
+      dormitoryId, studentPassword, studentName, 
+      studentSex, institute, major
+      )
+    values (#{studentid,jdbcType=INTEGER}, #{studyid,jdbcType=VARCHAR}, #{buildingid,jdbcType=INTEGER}, 
+      #{dormitoryid,jdbcType=INTEGER}, #{studentpassword,jdbcType=VARCHAR}, #{studentname,jdbcType=VARCHAR}, 
+      #{studentsex,jdbcType=VARCHAR}, #{institute,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+ <!--  查询学生信息的方法 -->
+ <select id="selectAllStudent" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+  </select>
+  
+  
+  
+  <!--  分页查询学生信息的方法 -->
+ <select id="selectStudentPage" resultMap="findStudentResultMap" parameterType="map" >
+    select s.* ,d.dormitoryId d_dormitoryId,d.dormitoryName,b.buildingId b_buildingId,b.buildingName
+    from student s
+    left join building b on s.buildingId = b.buildingId
+    left join dormitory d on s.dormitoryId = d.dormitoryId
+    limit #{startIndex},#{pageSize}
+   <!--  limit (currentPage-1)*count,count; -->
+  </select>
+   <!-- 查询学生总页数 -->
+ <select id="selectStudentTotalPage" resultType="int">
+    select count(1)  from student 
+  </select>
+  
+  <!-- 删除学生 -->
+  <delete id="deleteByStudentId" parameterType="java.lang.Integer" >
+    delete from student
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </delete>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sxau.dormitory.entity.Student" >
+    insert into student (studentId, studyId, buildingId, 
+      dormitoryId, studentPassword, studentName, 
+      studentSex, institute, major
+      )
+    values (#{studentid,jdbcType=INTEGER}, #{studyid,jdbcType=VARCHAR}, #{buildingid,jdbcType=INTEGER}, 
+      #{dormitoryid,jdbcType=INTEGER}, #{studentpassword,jdbcType=VARCHAR}, #{studentname,jdbcType=VARCHAR}, 
+      #{studentsex,jdbcType=VARCHAR}, #{institute,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="studyid != null" >
+        studyId,
+      </if>
+      <if test="buildingid != null" >
+        buildingId,
+      </if>
+      <if test="dormitoryid != null" >
+        dormitoryId,
+      </if>
+      <if test="studentpassword != null" >
+        studentPassword,
+      </if>
+      <if test="studentname != null" >
+        studentName,
+      </if>
+      <if test="studentsex != null" >
+        studentSex,
+      </if>
+      <if test="institute != null" >
+        institute,
+      </if>
+      <if test="major != null" >
+        major,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentid != null" >
+        #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="studyid != null" >
+        #{studyid,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingid != null" >
+        #{buildingid,jdbcType=INTEGER},
+      </if>
+      <if test="dormitoryid != null" >
+        #{dormitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="studentpassword != null" >
+        #{studentpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentname != null" >
+        #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="studentsex != null" >
+        #{studentsex,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null" >
+        #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Student" >
+    update student
+    <set >
+      <if test="studyid != null" >
+        studyId = #{studyid,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingid != null" >
+        buildingId = #{buildingid,jdbcType=INTEGER},
+      </if>
+      <if test="dormitoryid != null" >
+        dormitoryId = #{dormitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="studentpassword != null" >
+        studentPassword = #{studentpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="studentname != null" >
+        studentName = #{studentname,jdbcType=VARCHAR},
+      </if>
+      <if test="studentsex != null" >
+        studentSex = #{studentsex,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null" >
+        institute = #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Student" >
+    update student
+    set studyId = #{studyid,jdbcType=VARCHAR},
+      buildingId = #{buildingid,jdbcType=INTEGER},
+      dormitoryId = #{dormitoryid,jdbcType=INTEGER},
+      studentPassword = #{studentpassword,jdbcType=VARCHAR},
+      studentName = #{studentname,jdbcType=VARCHAR},
+      studentSex = #{studentsex,jdbcType=VARCHAR},
+      institute = #{institute,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR}
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </update>
+</mapper>

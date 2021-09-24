@@ -1,0 +1,35 @@
+package com.sxau.dormitory.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import com.sxau.dormitory.entity.Maintain;
+
+public interface MaintainMapper {
+    int deleteByPrimaryKey(Integer maintainid);
+
+    int insert(Maintain record);
+
+    int insertSelective(Maintain record);
+
+    Maintain selectByPrimaryKey(Integer maintainid);
+
+    int updateByPrimaryKeySelective(Maintain record);
+
+    int updateByPrimaryKey(Maintain record);
+    
+    //插入维修记录
+    int insertMaintainRecord(Maintain record);
+    
+    //根据学生ID查询维修记录 
+    List<Maintain> selectByStudentId(Integer studentid);
+    
+    //查询所有维修记录
+    List<Maintain> selectAllMaintain(Map<String, Integer> map);
+    
+    //查询总页数
+    int selectMaintainTotalPage();
+    
+    //修改维修状态
+    int updateByMaintainId(int maintainid);
+}

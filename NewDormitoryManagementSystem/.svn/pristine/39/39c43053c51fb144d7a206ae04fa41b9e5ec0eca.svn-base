@@ -1,0 +1,35 @@
+package com.sxau.dormitory.biz;
+
+import java.util.List;
+import java.util.Map;
+
+import com.sxau.dormitory.entity.Student;
+
+public interface StudentBiz {
+	public int insertStudent(Student student);
+	
+	public List<Student> selectAllStudent();
+	
+	public int deleteByStudentId(Integer studentid);
+	
+	public Student selectByStudentId(Integer studentid);
+	
+	//根据名字查询学生
+	public Student selectByStudentName(String studentName);
+	
+	//学生登录的方法
+    public Student selectLoginStudent(Map<String, String> map);
+    
+    //分页查询
+    public List<Student> selectStudentPage(int start,int count);
+    //查询学生总页数
+    public int selectStudentTotalPage();
+    //根据id修改学生信息
+    public int updateStudentById(Student student);
+    //批量分配宿舍
+    public int updateManyDormitory(Map<String, Object> map);
+    //根据宿舍号和楼宇号查询学生
+    public List<Student> selectByBuildingAndDormitory(Map<String, Integer> map);
+    // 根据学生ID修改密码 
+    public int updatePasswordById(Student record);
+}

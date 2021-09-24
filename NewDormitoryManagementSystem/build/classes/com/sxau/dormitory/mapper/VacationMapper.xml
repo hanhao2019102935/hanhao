@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.VacationMapper" >
+  <resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Vacation" >
+    <id column="vacateId" property="vacateid" jdbcType="INTEGER" />
+    <result column="workerID" property="workerid" jdbcType="INTEGER" />
+    <result column="applytime" property="applytime" jdbcType="TIMESTAMP" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="aimplace" property="aimplace" jdbcType="VARCHAR" />
+    <result column="days" property="days" jdbcType="INTEGER" />
+    <result column="isvacation" property="isvacation" jdbcType="INTEGER" />
+    <result column="otherone" property="otherone" jdbcType="INTEGER" />
+    <result column="othertwo" property="othertwo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    vacateId, workerID, applytime, starttime, endtime, aimplace, days, isvacation, otherone, 
+    othertwo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vacation
+    where vacateId = #{vacateid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查询假期列表 -->
+  <select id="selectByWorkerid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vacation
+    where workerID = #{workerid,jdbcType=INTEGER}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vacation
+    where vacateId = #{vacateid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sxau.dormitory.entity.Vacation" >
+    insert into vacation (vacateId, workerID, applytime, 
+      starttime, endtime, aimplace, 
+      days, isvacation, otherone, 
+      othertwo)
+    values (#{vacateid,jdbcType=INTEGER}, #{workerid,jdbcType=INTEGER}, #{applytime,jdbcType=TIMESTAMP}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{aimplace,jdbcType=VARCHAR}, 
+      #{days,jdbcType=INTEGER}, #{isvacation,jdbcType=INTEGER}, #{otherone,jdbcType=INTEGER}, 
+      #{othertwo,jdbcType=VARCHAR})
+  </insert>
+  
+  <!-- 请假 -->
+  <insert id="insertVacation" parameterType="com.sxau.dormitory.entity.Vacation" >
+    insert into vacation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vacateid != null" >
+        vacateId,
+      </if>
+      <if test="workerid != null" >
+        workerID,
+      </if>
+      <if test="applytime != null" >
+        applytime,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="aimplace != null" >
+        aimplace,
+      </if>
+      <if test="days != null" >
+        days,
+      </if>
+      <if test="isvacation != null" >
+        isvacation,
+      </if>
+      <if test="otherone != null" >
+        otherone,
+      </if>
+      <if test="othertwo != null" >
+        othertwo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vacateid != null" >
+        #{vacateid,jdbcType=INTEGER},
+      </if>
+      <if test="workerid != null" >
+        #{workerid,jdbcType=INTEGER},
+      </if>
+      <if test="applytime != null" >
+        #{applytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aimplace != null" >
+        #{aimplace,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="isvacation != null" >
+        #{isvacation,jdbcType=INTEGER},
+      </if>
+      <if test="otherone != null" >
+        #{otherone,jdbcType=INTEGER},
+      </if>
+      <if test="othertwo != null" >
+        #{othertwo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Vacation" >
+    insert into vacation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vacateid != null" >
+        vacateId,
+      </if>
+      <if test="workerid != null" >
+        workerID,
+      </if>
+      <if test="applytime != null" >
+        applytime,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="aimplace != null" >
+        aimplace,
+      </if>
+      <if test="days != null" >
+        days,
+      </if>
+      <if test="isvacation != null" >
+        isvacation,
+      </if>
+      <if test="otherone != null" >
+        otherone,
+      </if>
+      <if test="othertwo != null" >
+        othertwo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vacateid != null" >
+        #{vacateid,jdbcType=INTEGER},
+      </if>
+      <if test="workerid != null" >
+        #{workerid,jdbcType=INTEGER},
+      </if>
+      <if test="applytime != null" >
+        #{applytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aimplace != null" >
+        #{aimplace,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="isvacation != null" >
+        #{isvacation,jdbcType=INTEGER},
+      </if>
+      <if test="otherone != null" >
+        #{otherone,jdbcType=INTEGER},
+      </if>
+      <if test="othertwo != null" >
+        #{othertwo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Vacation" >
+    update vacation
+    <set >
+      <if test="workerid != null" >
+        workerID = #{workerid,jdbcType=INTEGER},
+      </if>
+      <if test="applytime != null" >
+        applytime = #{applytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aimplace != null" >
+        aimplace = #{aimplace,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        days = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="isvacation != null" >
+        isvacation = #{isvacation,jdbcType=INTEGER},
+      </if>
+      <if test="otherone != null" >
+        otherone = #{otherone,jdbcType=INTEGER},
+      </if>
+      <if test="othertwo != null" >
+        othertwo = #{othertwo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vacateId = #{vacateid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Vacation" >
+    update vacation
+    set workerID = #{workerid,jdbcType=INTEGER},
+      applytime = #{applytime,jdbcType=TIMESTAMP},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      aimplace = #{aimplace,jdbcType=VARCHAR},
+      days = #{days,jdbcType=INTEGER},
+      isvacation = #{isvacation,jdbcType=INTEGER},
+      otherone = #{otherone,jdbcType=INTEGER},
+      othertwo = #{othertwo,jdbcType=VARCHAR}
+    where vacateId = #{vacateid,jdbcType=INTEGER}
+  </update>
+</mapper>

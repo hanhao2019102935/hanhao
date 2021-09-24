@@ -1,0 +1,37 @@
+package com.sxau.dormitory.biz.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sxau.dormitory.biz.MaintainBiz;
+import com.sxau.dormitory.entity.Maintain;
+import com.sxau.dormitory.mapper.MaintainMapper;
+
+@Service(value="MaintainBiz")
+public class MaintainBizImpl implements MaintainBiz {
+	@Autowired
+	private MaintainMapper maintainMapper;	
+
+	public MaintainMapper getMaintainMapper() {
+		return maintainMapper;
+	}
+	
+	public void setMaintainMapper(MaintainMapper maintainMapper) {
+		this.maintainMapper = maintainMapper;
+	}
+
+	@Override
+	public int insertMaintainRecord(Maintain record) {
+		// TODO Auto-generated method stub
+		return maintainMapper.insertMaintainRecord(record);
+	}
+
+	@Override
+	public List<Maintain> selectByStudentId(Integer studentid) {
+		// TODO Auto-generated method stub
+		return maintainMapper.selectByStudentId(studentid);
+	}
+
+}

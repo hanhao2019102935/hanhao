@@ -1,0 +1,42 @@
+package com.sxau.dormitory.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import com.sxau.dormitory.entity.Student;
+
+public interface StudentMapper {
+	/*删除学生*/
+    int deleteByStudentId(Integer studentid);
+
+    int insertStudent(Student record);    
+
+    int insertSelective(Student record);
+
+    //根据ID的查询学生
+    Student selectByStudentId(Integer studentid);
+
+    int updateByPrimaryKeySelective(Student record);
+
+    int updateByPrimaryKey(Student record);
+    
+    List<Student> selectAllStudent();
+    
+    //分页查询
+    List<Student> selectStudentPage(Map<String, Integer> map);
+    
+    //查询学生总页数
+    public int selectStudentTotalPage();
+    
+    //根据名字查询学生
+    Student selectByStudentName(String studentName);
+    
+    //学生登录的方法
+    Student selectLoginStudent(Map<String, String> map);
+    
+   //批量分配宿舍
+    public int updateManyDormitory(Map<String, Object> map);
+    
+    //根据宿舍号和楼宇号查询学生
+    public List<Student> selectByBuildingAndDormitory(Map<String, Integer> map);
+}

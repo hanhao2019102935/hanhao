@@ -1,0 +1,74 @@
+package com.sxau.dormitory.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sxau.dormitory.biz.DormitoryBiz;
+import com.sxau.dormitory.entity.Dormitory;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+@Controller
+@RequestMapping(value ="dormitory")
+public class DormitoryController {
+	@Autowired
+	private DormitoryBiz dormitoryBiz;
+
+	public DormitoryBiz getDormitoryBiz() {
+		return dormitoryBiz;
+	}
+
+	public void setDormitoryBiz(DormitoryBiz dormitoryBiz) {
+		this.dormitoryBiz = dormitoryBiz;
+	}
+	
+	@RequestMapping(value="selectByBuildingId")
+	@ResponseBody
+	public Map<String,Object> selectByBuildingId(Integer buildingid,Integer page){
+		if(page==null){
+			page = 1;
+		}
+		Integer startIndex = (page-1)*PageSizeUtil.PAGE_SIZE1;
+		Integer pageSize = PageSizeUtil.PAGE_SIZE1;
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("startIndex", startIndex);
+		paramMap.put("pageSize", pageSize);
+		paramMap.put("buildingid", buildingid);
+		List<Dormitory> dormitoryList = dormitoryBiz.selectByBuildingId(paramMap);
+		int totalPage = dormitoryBiz.selectByBuildingIdTotalPage(buildingid);
+		int backpage = page-1;
+		int nextpage = page+1;
+		if(backpage==0){
+			backpage = 1;
+		}
+		if(nextpage>totalPage){
+			nextpage = totalPage;
+		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("dormitoryList",dormitoryList);
+		map.put("currentpage", page);
+		map.put("backpage", backpage);
+		map.put("nextpage", nextpage);
+		map.put("pageSize", pageSize);
+		map.put("totalPage", totalPage);
+		return map;
+	}
+	//查询楼层数对应的所有宿舍号
+	@RequestMapping(value="findAllDormitory")
+	@ResponseBody
+	public List<Dormitory> findAllDormitory(String floorCount,int buildingid){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("floorCount", floorCount);
+		map.put("buildingid", buildingid);
+		List<Dormitory> dormitoryList = dormitoryBiz.findAllDormitory(map);
+		return dormitoryList;
+	}
+	
+}

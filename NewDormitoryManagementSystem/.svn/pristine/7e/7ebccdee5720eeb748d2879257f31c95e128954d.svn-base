@@ -1,0 +1,74 @@
+package com.sxau.dormitory.controller;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.sxau.dormitory.biz.ExcelBiz;
+import com.sxau.dormitory.biz.VistorBiz;
+import com.sxau.dormitory.entity.Student;
+import com.sxau.dormitory.entity.Vistor;
+import com.sxau.dormitory.util.ImportExcel;
+
+@Controller
+@RequestMapping(value="excel")
+public class ExcelController {
+	@Autowired
+	private ExcelBiz excelBiz;
+
+	public ExcelBiz getExcelBiz() {
+		return excelBiz;
+	}
+
+	public void setExcelBiz(ExcelBiz excelBiz) {
+		this.excelBiz = excelBiz;
+	}
+	
+	//excel导出学生信息
+	@RequestMapping(value="studentExcel")
+	public void studentExcel(HttpServletResponse response) {
+		try {
+		//输出Excel文件
+		OutputStream output=response.getOutputStream();
+		response.reset();
+		response.setHeader("Content-disposition", "attachment; filename=student.xls");
+		response.setContentType("application/msexcel");    
+		List<Student> studentList = excelBiz.selectAllStudents();
+		HSSFWorkbook wkb = ImportExcel.importStudentExcel(studentList);
+		wkb.write(output);
+		output.flush();
+		output.close(); 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//excel导出访客信息
+	@RequestMapping(value="vistorExcel")
+	public void vistorExcel(HttpServletResponse response) {
+		try {
+		//输出Excel文件
+		OutputStream output=response.getOutputStream();
+		response.reset();
+		response.setHeader("Content-disposition", "attachment; filename=vistor.xls");
+		response.setContentType("application/msexcel");    
+		List<Vistor> vistorList = excelBiz.selectAllVistor();
+		HSSFWorkbook wkb = ImportExcel.importVistorExcel(vistorList);
+		wkb.write(output);
+		output.flush();
+		output.close(); 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+}

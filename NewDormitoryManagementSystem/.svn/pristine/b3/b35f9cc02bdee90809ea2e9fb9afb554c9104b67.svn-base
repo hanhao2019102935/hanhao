@@ -1,0 +1,45 @@
+package com.sxau.dormitory.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.sxau.dormitory.biz.MaintainBiz;
+import com.sxau.dormitory.entity.Maintain;
+
+
+@Controller
+@RequestMapping(value = "maintain")
+public class MaintainController {
+	@Autowired
+	private MaintainBiz maintainBiz;
+
+	public MaintainBiz getMaintainBiz() {
+		return maintainBiz;
+	}
+
+	public void setMaintainBiz(MaintainBiz maintainBiz) {
+		this.maintainBiz = maintainBiz;
+	}
+
+	// 插入维修记录的方法
+	@RequestMapping(value = "addMaintain")
+	public String addMaintain(Maintain maintain) {
+		maintain.setMaintainstatu(1);
+		maintainBiz.insertMaintainRecord(maintain);
+		return "redirect:";
+	}
+	
+	// 查询维修记录的方法
+	@RequestMapping(value = "showMyMaintain")
+	public String showMyMaintain(int studentid,Map<String,Object> resMap) {
+		System.out.println("------------------------"+studentid+"-------------------------------");
+		List<Maintain> maintainList = maintainBiz.selectByStudentId(studentid);
+		resMap.put("maintainList",maintainList);
+		System.out.println("------------------------"+maintainList+"-------------------------------");
+		return "myMaintain";
+	}
+}

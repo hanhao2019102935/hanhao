@@ -1,0 +1,68 @@
+package com.sxau.dormitory.biz.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sxau.dormitory.biz.MaintainBiz;
+import com.sxau.dormitory.entity.Maintain;
+import com.sxau.dormitory.entity.Vistor;
+import com.sxau.dormitory.mapper.MaintainMapper;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+@Service(value="MaintainBiz")
+public class MaintainBizImpl implements MaintainBiz {
+	@Autowired
+	private MaintainMapper maintainMapper;	
+
+	public MaintainMapper getMaintainMapper() {
+		return maintainMapper;
+	}
+	
+	public void setMaintainMapper(MaintainMapper maintainMapper) {
+		this.maintainMapper = maintainMapper;
+	}
+
+	@Override
+	public int insertMaintainRecord(Maintain record) {
+		// TODO Auto-generated method stub
+		return maintainMapper.insertMaintainRecord(record);
+	}
+
+	@Override
+	public List<Maintain> selectByStudentId(Integer studentid) {
+		// TODO Auto-generated method stub
+		return maintainMapper.selectByStudentId(studentid);
+	}	
+
+	@Override
+	public int selectMaintainTotalPage() {
+		// TODO Auto-generated method stub
+		int totalPage = maintainMapper.selectMaintainTotalPage();
+		if(totalPage%PageSizeUtil.PAGE_SIZE==0){
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE;
+		}else{
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE+1;
+		}
+		return totalPage;
+	}
+
+	@Override
+	public List<Maintain> selectAllMaintain(int startIndex, int pageSize) {
+		// TODO Auto-generated method stub
+		Map<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("startIndex", startIndex);
+		paramMap.put("pageSize", pageSize);
+		return maintainMapper.selectAllMaintain(paramMap);
+	}
+
+	@Override
+	public int updateByMaintainId(int maintainid) {
+		// TODO Auto-generated method stub
+		return maintainMapper.updateByMaintainId(maintainid);
+	}
+
+}

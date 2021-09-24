@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Admin" >
+    <id column="adminId" property="adminid" jdbcType="INTEGER" />
+    <result column="adminPhone" property="adminphone" jdbcType="VARCHAR" />
+    <result column="adminPassword" property="adminpassword" jdbcType="VARCHAR" />
+    <result column="adminName" property="adminname" jdbcType="VARCHAR" />
+    <result column="adminSex" property="adminsex" jdbcType="VARCHAR" />
+    <result column="buildingId" property="buildingid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    adminId, adminPhone, adminPassword, adminName, adminSex, buildingId
+  </sql>
+
+  
+  <!-- 修改宿管信息的方法 -->
+  <update id="updateByAdminId" parameterType="com.sxau.dormitory.entity.Admin" >
+    update admin
+    set adminPhone = #{adminphone,jdbcType=VARCHAR},
+      adminPassword = #{adminpassword,jdbcType=VARCHAR},
+      adminName = #{adminname,jdbcType=VARCHAR},
+      adminSex = #{adminsex,jdbcType=VARCHAR},
+      buildingId = #{buildingid,jdbcType=INTEGER}
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </update>
+  
+  <!--宿管注册的方法 -->
+  <insert id="insertAdmin" parameterType="com.sxau.dormitory.entity.Admin" >
+    insert into admin (adminId, adminPhone, adminPassword, 
+      adminName, adminSex, buildingId
+      )
+    values (#{adminid,jdbcType=INTEGER}, #{adminphone,jdbcType=VARCHAR}, #{adminpassword,jdbcType=VARCHAR}, 
+      #{adminname,jdbcType=VARCHAR}, #{adminsex,jdbcType=VARCHAR}, #{buildingid,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <!-- 宿管登录的方法 -->
+  <select id="selectLoginAdmin" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where adminPhone = #{adminPhone} and adminPassword = #{adminPassword}
+  </select>
+  
+  <!-- 查询所有宿管的方法 -->
+  <select id="selectAllAdmin" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+  </select>
+  
+  <!-- 根据BuildingId查询宿管信息 -->
+  <select id="selectByBuildingId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where buildingId = #{buildingId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sxau.dormitory.entity.Admin" >
+    insert into admin (adminId, adminPhone, adminPassword, 
+      adminName, adminSex, buildingId
+      )
+    values (#{adminid,jdbcType=INTEGER}, #{adminphone,jdbcType=VARCHAR}, #{adminpassword,jdbcType=VARCHAR}, 
+      #{adminname,jdbcType=VARCHAR}, #{adminsex,jdbcType=VARCHAR}, #{buildingid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adminid != null" >
+        adminId,
+      </if>
+      <if test="adminphone != null" >
+        adminPhone,
+      </if>
+      <if test="adminpassword != null" >
+        adminPassword,
+      </if>
+      <if test="adminname != null" >
+        adminName,
+      </if>
+      <if test="adminsex != null" >
+        adminSex,
+      </if>
+      <if test="buildingid != null" >
+        buildingId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adminid != null" >
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="adminphone != null" >
+        #{adminphone,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpassword != null" >
+        #{adminpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="adminname != null" >
+        #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminsex != null" >
+        #{adminsex,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingid != null" >
+        #{buildingid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Admin" >
+    update admin
+    <set >
+      <if test="adminphone != null" >
+        adminPhone = #{adminphone,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpassword != null" >
+        adminPassword = #{adminpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="adminname != null" >
+        adminName = #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminsex != null" >
+        adminSex = #{adminsex,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingid != null" >
+        buildingId = #{buildingid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Admin" >
+    update admin
+    set adminPhone = #{adminphone,jdbcType=VARCHAR},
+      adminPassword = #{adminpassword,jdbcType=VARCHAR},
+      adminName = #{adminname,jdbcType=VARCHAR},
+      adminSex = #{adminsex,jdbcType=VARCHAR},
+      buildingId = #{buildingid,jdbcType=INTEGER}
+    where adminId = #{adminid,jdbcType=INTEGER}
+  </update>
+</mapper>

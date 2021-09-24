@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>员工页面</title>
+		<!-- Bootstrap core CSS -->
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/verify.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			var userid = -1;
+			window.onload = function() {
+				userid = getCookie("userid");
+				showAdmin();
+			}
+
+			function getCookie(cookieName) {
+				var cookieValue = "";
+				if (document.cookie && document.cookie != "") {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = cookies[i];
+						if (cookie.substring(0, cookieName.length + 2).trim() == cookieName
+							.trim() +
+							"=") {
+							cookieValue = cookie.substring(cookieName.length + 2,
+								cookie.length);
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+			function showAdmin() {
+				$.ajax({
+					url: "http://localhost:8080/DormitoryManagementSystem/admin/selectByUserId.do",
+					type: "post",
+					data: {
+						userid: userid
+					},
+					datatype: "text",
+					success: function(admin) {
+						console.log(admin);
+						
+						$("#workerid").val(admin.workerid);
+						if(admin.usertype == 1){
+							$("#welcomeDiv").html("欢迎您：" + admin.name);
+							$("#personUl").attr("style","");
+						}else{
+							$("#welcomeDiv").html("欢迎您管理员：" + admin.name);
+							$("#managerUl").attr("style","");
+						}
+						
+					},
+					error: function(xhr) {
+						alert("错误提示m： " + xhr.status + " " + xhr.statusText);
+					}
+				});
+			}
+			
+			function myPersonalInfo(){
+				$("iframe").attr("src","myPersonalInfo.html");
+			}
+			function myVacationList(){
+				$("iframe").attr("src","myVacationList.html");
+			}
+			function createVacationList(){
+				$("iframe").attr("src","createVacation.html");
+			}
+			function managerIndex(){
+				$("iframe").attr("src","managerIndex.html");
+			}
+		</script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<!-- 顶部信息行 -->
+			<div class="row">
+				<div class="col-md-12" style="background-color: dodgerblue;height: 50px;">
+					<div id="welcomeDiv"></div>
+					<div style="float: right;"><a href="index.html" style="color: white;text-decoration:none;">注销</a></div>
+				</div>
+			</div>
+
+			<!-- 中间 -->
+			<div class="row" style="height: 704px;">
+				<!-- 导航列 -->
+				<div class="col-md-2" style="background-color: whitesmoke;height: 704px;">
+					<ul class="nav nav-pills nav-stacked" id="personUl" style="display: none">
+						<!-- <li role="presentation"><a href="myPersonalInfo.html">信息管理</a></li>
+						<li role="presentation"><a href="myVacationList.html">请假记录</a></li>
+						<li role="presentation"><a href="myVacationList.html">请假</a></li> -->
+						<li role="presentation"><a href="javascript:void(0);" onclick="myPersonalInfo()">信息管理</a></li>
+						<li role="presentation"><a href="javascript:void(0);" onclick="myVacationList()">请假记录</a></li>
+						<li role="presentation"><a href="javascript:void(0);" onclick="createVacationList()">请假</a></li>						
+					</ul>
+					<ul class="nav nav-pills nav-stacked" id="managerUl" style="display: none">
+						<!-- <li role="presentation"><a href="myPersonalInfo.html">信息管理</a></li>
+						<li role="presentation"><a href="myVacationList.html">请假记录</a></li>
+						<li role="presentation"><a href="myVacationList.html">请假</a></li> -->
+						<li role="presentation"><a href="javascript:void(0);" onclick="myPersonalInfo()">个人信息管理</a></li>
+						<li role="presentation"><a href="javascript:void(0);" onclick="managerIndex()">员工信息</a></li>
+						<li role="presentation"><a href="javascript:void(0);" onclick="myVacationList()">员工请假记录</a></li>						
+					</ul>
+				</div>
+
+				<!-- 内容列 -->
+				<div class="col-md-10">
+					<!-- <form action="vacation/insertVacation.do" method="post">
+						请假信息：<textarea name="vacationInfo">此处输入请假信息</textarea>
+						<input type="hidden" id="workerid" name="workerid" value="">
+						<button type="submit">提交请假信息</button>
+					</form> -->
+					<iframe src="createVacation.html" frameborder="no" style="width: 100%;height: 620px;"></iframe>
+				</div>
+			</div>
+			
+			<!-- 底部信息行 -->
+			<div class="row">
+				<div class="col-md-12" style="background-color: dodgerblue;height: 50px;color: white;">
+					<p>一汽资本控制有限公司</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,125 @@
+package com.sxau.dormitory.util;
+
+import java.util.List;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
+
+import com.sxau.dormitory.entity.Student;
+import com.sxau.dormitory.entity.Vistor;
+
+public class ImportExcel {
+	//导出学生
+	public static HSSFWorkbook importStudentExcel(List<Student> studentList) {
+		int i = 0;
+		HSSFWorkbook wkb = new HSSFWorkbook(); 
+		HSSFSheet sheet=wkb.createSheet("学生信息表"); 
+		//设置单元格式
+		HSSFCellStyle setBorder = wkb.createCellStyle();
+		//设置字体
+		HSSFFont font = wkb.createFont();
+		//创建第一行
+		HSSFRow row1=sheet.createRow(0); 
+		HSSFCell cell1=row1.createCell(0); 
+		cell1.setCellValue("学生信息"); 
+		sheet.addMergedRegion(new CellRangeAddress(0,0,0,7));
+		setBorder.setAlignment(HorizontalAlignment.CENTER);
+		font.setFontName("黑体");
+		//应用样式
+		setBorder.setFont(font);
+		cell1.setCellStyle(setBorder);
+		//创建第二行
+		HSSFRow row2=sheet.createRow(1);     
+		row2.createCell(0).setCellValue("序号"); 
+		row2.createCell(1).setCellValue("学号");   
+		row2.createCell(2).setCellValue("姓名");  
+		row2.createCell(3).setCellValue("性别"); 
+		row2.createCell(4).setCellValue("院系");    
+		row2.createCell(5).setCellValue("楼宇");  
+		row2.createCell(6).setCellValue("宿舍号");  
+		row2.createCell(7).setCellValue("专业");  
+		
+		//创建第三行
+		for(Student student : studentList) {
+			HSSFRow row3=sheet.createRow(2+i);
+		row3.createCell(0).setCellValue(++i);
+		row3.createCell(1).setCellValue(student.getStudyid());
+		row3.createCell(2).setCellValue(student.getStudentname());
+		row3.createCell(3).setCellValue(student.getStudentsex());
+		row3.createCell(4).setCellValue(student.getInstitute());  
+		if(student.getBuilding()!=null)
+			row3.createCell(5).setCellValue(student.getBuilding().getBuildingname());  
+		else
+			row3.createCell(5).setCellValue("");  
+		if(student.getDormitory()!=null)	
+			row3.createCell(6).setCellValue(student.getDormitory().getDormitoryname());  
+		else
+			row3.createCell(6).setCellValue("");  
+		if(student.getMajor()!=null)	
+			row3.createCell(7).setCellValue(student.getMajor()); 
+		else
+			row3.createCell(7).setCellValue(""); 
+		}
+		return wkb;
+	}
+	
+	//导出访客
+	public static HSSFWorkbook importVistorExcel(List<Vistor> vistorList) {
+		int i = 0;
+		HSSFWorkbook wkb = new HSSFWorkbook(); 
+		HSSFSheet sheet=wkb.createSheet("访客信息表"); 
+		//设置单元格式
+		HSSFCellStyle setBorder = wkb.createCellStyle();
+		//设置字体
+		HSSFFont font = wkb.createFont();
+		//创建第一行
+		HSSFRow row1=sheet.createRow(0); 
+		HSSFCell cell1=row1.createCell(0); 
+		cell1.setCellValue("访客信息"); 
+		sheet.addMergedRegion(new CellRangeAddress(0,0,0,8));
+		setBorder.setAlignment(HorizontalAlignment.CENTER);
+		font.setFontName("黑体");
+		//应用样式
+		setBorder.setFont(font);
+		cell1.setCellStyle(setBorder);
+		//创建第二行
+		HSSFRow row2=sheet.createRow(1);     
+		row2.createCell(0).setCellValue("序号"); 
+		row2.createCell(1).setCellValue("姓名");   
+		row2.createCell(2).setCellValue("性别");  
+		row2.createCell(3).setCellValue("来访时间"); 
+		row2.createCell(4).setCellValue("访问事由");    
+		row2.createCell(5).setCellValue("访问楼宇号");  
+		row2.createCell(6).setCellValue("访问宿舍号");  
+		row2.createCell(7).setCellValue("被访学生");  
+		
+		//创建第三行
+		for(Vistor vistor : vistorList) {
+			HSSFRow row3=sheet.createRow(2+i);
+			row3.createCell(0).setCellValue(++i);
+			row3.createCell(1).setCellValue(vistor.getVistorname());
+			row3.createCell(2).setCellValue(vistor.getVistorsex());
+			row3.createCell(3).setCellValue(vistor.getVistorcometime());
+			row3.createCell(4).setCellValue(vistor.getVistorreason());  
+			if(vistor.getBuilding()!=null)
+				row3.createCell(5).setCellValue(vistor.getBuilding().getBuildingname());  
+			else
+				row3.createCell(5).setCellValue("");  
+			if(vistor.getDormitory()!=null)	
+				row3.createCell(6).setCellValue(vistor.getDormitory().getDormitoryname());  
+			else
+				row3.createCell(6).setCellValue("");  
+			if(vistor.getStudent()!=null)	
+				row3.createCell(7).setCellValue(vistor.getStudent().getStudentname()); 
+			else
+				row3.createCell(7).setCellValue(""); 
+			}
+		return wkb;
+	}
+}

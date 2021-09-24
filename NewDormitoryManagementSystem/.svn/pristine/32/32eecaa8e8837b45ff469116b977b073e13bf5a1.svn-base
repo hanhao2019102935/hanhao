@@ -1,0 +1,205 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<base href=" <%=basePath%>">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+@media screen and (min-width: 0px) and (max-width: 1400px) {
+	html {
+		font-size: 55%;
+	}
+}
+
+@media screen and (min-width: 1400px) and (max-width: 2000px) {
+	html {
+		font-size: 62.5%;
+	}
+}
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#headDiv {
+	width: 100%;
+	height: 9%;
+	background-color: #426374;
+}
+
+#bodyDiv {
+	width: 100%;
+	height: 79%;
+	background-image: url(img/admin-login-bg.jpg);
+	background-position-x: 40%;
+	background-position-y: center;
+	background-size: 120% 190%;
+}
+
+#footDiv {
+	margin-top: 0.1%;
+	width: 100%;
+	height: 11.8%;
+	background-color: #426374;
+}
+
+p {
+	text-align: center;
+	line-height: 600%;
+	margin: 0px;
+	padding: 0px;
+	font-size: 0.9rem;
+	color: white;
+}
+
+#box {
+	position: absolute;
+	margin-top: 6%;
+	margin-left: 28.5%;
+	padding-left: 5%;
+	padding-top: 3%;
+	width: 36%;
+	height: 47%;
+	background-image: url(img/admin-loginform-bg.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.userImg {
+	width: 90%;
+}
+
+.input {
+	margin-left: 5%;
+	width: 95%;
+	height: 70%;
+	border: solid 1px #DCDCDC;
+	font-size: 1.75rem;
+}
+
+.yzm {
+	margin-left: 5%;
+	width: 35%;
+	height: 70%;
+	border: solid 1px #DCDCDC;
+	font-size: 1.75rem;
+}
+
+table {
+	height: 96%;
+	vertical-align: bottom;
+}
+/*td{
+				border: solid 1px black;
+				
+			}*/
+.submit, .reset {
+	margin-left: 5%;
+	width: 30%;
+	height: 85%;
+	border-style: none;
+	font-size: 1.65rem;
+	border-radius: 12px;
+}
+
+.submit {
+	background-color: #5EB95E;
+	color: white;
+}
+
+.register, .register a {
+	color: white;
+	text-decoration: none;
+	font-size: 1.3rem;
+}
+</style>
+<script type="text/javascript">
+	 function randNum(){
+		var rand = Math.ceil(Math.random()*10);
+		return rand;
+	} 
+	 /* function updateImg(){
+		var num = randNum();
+		$("#yzmImg").attr("src","yzm/"+num+".png");
+		$("#imgId").val(num);
+	} */
+	
+	 function updateImg(){
+		$.ajax({
+			success : function() {
+				var num = randNum();
+				$("#yzmImg").attr("src","yzm/"+num+".png");
+				$("#imgId").val(num);
+			}
+		}); 
+	}
+	
+	window.onload = function(){
+		var num = randNum();
+		$("#yzmImg").attr("src","yzm/"+num+".png");
+		$("#imgId").val(num);
+	} 
+	
+	
+</script>
+</head>
+
+<body>
+	<div id="headDiv">
+		<img src="img/logo.png" />
+	</div>
+	<div id="bodyDiv">
+		<form action="admin/login.do" autocomplete="off" method="post">
+			<div id="box">
+				<table cellspacing="0px" cellpadding="0px">
+					<tr>
+						<td><img class="userImg" src="img/userUI.png"></img></td>
+						<td colspan="3"><input type="text" class="input"
+							name="username" placeholder=" 用户名" /></td>
+					</tr>
+					<tr>
+						<td><img class="userImg" src="img/passUI.png"></img></td>
+						<td colspan="3"><input type="password" class="input"
+							name="password" placeholder=" 密码" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="3">
+							<input type="text" class="yzm" name="yzm" placeholder=" 验证码" />
+							<input type="hidden" name="imgId" id="imgId"/>
+							<img id="yzmImg" class="yzmImg" src=""></img>
+							<a href="#" onclick="updateImg()">看不清，换一张</a>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="3"><input class="submit" type="submit"
+							value="登   录" /> <input class="reset" type="reset" value="取  消" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" align="right" class="register"><a
+							href="register.jsp">立即注册</a> | <a href="#">了解我们</a></td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>
+	<div id="footDiv">
+		<p>毕业设计 高校寝室管理系统 v1.0</p>
+	</div>
+</body>
+
+</html>

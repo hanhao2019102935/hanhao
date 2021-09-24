@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>假期申请页面</title>
+		<!-- Bootstrap core CSS -->
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			var userid = -1;
+			window.onload = function() {
+				userid = getCookie("userid");
+				showAdmin();
+			}
+
+			function getCookie(cookieName) {
+				var cookieValue = "";
+				if (document.cookie && document.cookie != "") {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = cookies[i];
+						if (cookie.substring(0, cookieName.length + 2).trim() == cookieName
+							.trim() +
+							"=") {
+							cookieValue = cookie.substring(cookieName.length + 2,
+								cookie.length);
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+			
+			function showAdmin() {
+				$.ajax({
+					url: "http://localhost:8080/DormitoryManagementSystem/admin/selectByUserId.do",
+					type: "post",
+					data: {
+						userid: userid
+					},
+					datatype: "text",
+					success: function(admin) {
+						console.log(admin);
+						//$("#welcomeDiv").html("欢迎您：" + admin.name);
+						$("#workerid").val(admin.workerid);
+					},
+					error: function(xhr) {
+						alert("错误提示m： " + xhr.status + " " + xhr.statusText);
+					}
+				});
+			}
+			
+		</script>
+	</head>
+	<body>
+		<form action="vacation/insertVacation.do" method="post">
+			<textarea name="vacationInfo" class="form-control" rows="3"
+				placeholder="请在此处输入请假信息，如：我明天去北京，后天回"></textarea>
+			<input type="hidden" id="workerid" name="workerid" value=""><br />
+			<button type="submit">提交请假信息</button>
+		</form>
+	</body>
+</html>

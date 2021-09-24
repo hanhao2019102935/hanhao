@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.MaintainMapper" >
+  <resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Maintain" >
+    <id column="maintainId" property="maintainid" jdbcType="INTEGER" />
+    <result column="subtime" property="subtime" jdbcType="TIMESTAMP" />
+    <result column="maintainTime" property="maintaintime" jdbcType="TIMESTAMP" />
+    <result column="maintainStatu" property="maintainstatu" jdbcType="INTEGER" />
+    <result column="maintainComment" property="maintaincomment" jdbcType="VARCHAR" />
+    <result column="studentId" property="studentid" jdbcType="VARCHAR" />
+    <result column="dormitoryId" property="dormitoryid" jdbcType="INTEGER" />
+    <result column="buildingId" property="buildingid" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="findVistorResultMap" type="com.sxau.dormitory.entity.Maintain" extends="BaseResultMap">
+  	<association property="dormitory" javaType="com.sxau.dormitory.entity.Dormitory">
+  		 <id column="d_dormitoryId" property="dormitoryid" jdbcType="INTEGER" />
+    	<result column="dormitoryName" property="dormitoryname" jdbcType="VARCHAR" />
+  	</association>
+  	<association property="building" javaType="com.sxau.dormitory.entity.Building">
+  		<id column="b_buildingId" property="buildingid" jdbcType="INTEGER" />
+		<result column="buildingName" property="buildingname" jdbcType="VARCHAR" />
+  	</association>
+  	<association property="student" javaType="com.sxau.dormitory.entity.Student">
+  		<id column="s_studentId" property="studentid" jdbcType="INTEGER" />
+		<result column="studentName" property="studentname" jdbcType="VARCHAR" />
+  	</association>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    maintainId, subtime, maintainTime, maintainStatu, maintainComment, studentId, dormitoryId, 
+    buildingId
+  </sql>
+  
+  <!-- 修改维修状态的方法 -->
+  <update id="updateByMaintainId" parameterType="INTEGER" >
+    update maintain
+    set maintainstatu = 2,maintaintime = (select curdate())
+    where maintainId = #{maintainid,jdbcType=INTEGER}
+  </update>
+  
+ <!-- 查询所有维修记录 -->
+  <select id="selectAllMaintain" resultMap="findVistorResultMap" parameterType="map">
+    select m.*,b.buildingName,d.dormitoryName,s.studentName
+    from maintain m
+    inner join building b on m.buildingId = b.buildingId
+    inner join dormitory d on m.dormitoryId = d.dormitoryId and m.buildingId = d.buildingId
+    inner join student s on s.studentId = m.studentId
+    limit #{startIndex},#{pageSize}
+  </select>
+  <select id="selectMaintainTotalPage" resultType="int">
+    select count(1)  from maintain 
+  </select>
+  
+  <!-- 插入维修记录 -->
+  <insert id="insertMaintainRecord" parameterType="com.sxau.dormitory.entity.Maintain" >
+    insert into maintain (maintainId, subtime, maintainTime, 
+      maintainStatu, maintainComment, studentId, 
+      dormitoryId, buildingId)
+    values (#{maintainid,jdbcType=INTEGER}, #{subtime,jdbcType=TIMESTAMP}, #{maintaintime,jdbcType=TIMESTAMP}, 
+      #{maintainstatu,jdbcType=INTEGER}, #{maintaincomment,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, 
+      #{dormitoryid,jdbcType=INTEGER}, #{buildingid,jdbcType=INTEGER})
+  </insert>
+  
+  <!-- 根据学生ID查询维修记录 -->
+  <select id="selectByStudentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from maintain
+    where studentId = #{studentid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from maintain
+    where maintainId = #{maintainid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from maintain
+    where maintainId = #{maintainid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sxau.dormitory.entity.Maintain" >
+    insert into maintain (maintainId, subtime, maintainTime, 
+      maintainStatu, maintainComment, studentId, 
+      dormitoryId, buildingId)
+    values (#{maintainid,jdbcType=INTEGER}, #{subtime,jdbcType=TIMESTAMP}, #{maintaintime,jdbcType=TIMESTAMP}, 
+      #{maintainstatu,jdbcType=INTEGER}, #{maintaincomment,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, 
+      #{dormitoryid,jdbcType=INTEGER}, #{buildingid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Maintain" >
+    insert into maintain
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="maintainid != null" >
+        maintainId,
+      </if>
+      <if test="subtime != null" >
+        subtime,
+      </if>
+      <if test="maintaintime != null" >
+        maintainTime,
+      </if>
+      <if test="maintainstatu != null" >
+        maintainStatu,
+      </if>
+      <if test="maintaincomment != null" >
+        maintainComment,
+      </if>
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="dormitoryid != null" >
+        dormitoryId,
+      </if>
+      <if test="buildingid != null" >
+        buildingId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="maintainid != null" >
+        #{maintainid,jdbcType=INTEGER},
+      </if>
+      <if test="subtime != null" >
+        #{subtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maintaintime != null" >
+        #{maintaintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maintainstatu != null" >
+        #{maintainstatu,jdbcType=INTEGER},
+      </if>
+      <if test="maintaincomment != null" >
+        #{maintaincomment,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="dormitoryid != null" >
+        #{dormitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="buildingid != null" >
+        #{buildingid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Maintain" >
+    update maintain
+    <set >
+      <if test="subtime != null" >
+        subtime = #{subtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maintaintime != null" >
+        maintainTime = #{maintaintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maintainstatu != null" >
+        maintainStatu = #{maintainstatu,jdbcType=INTEGER},
+      </if>
+      <if test="maintaincomment != null" >
+        maintainComment = #{maintaincomment,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null" >
+        studentId = #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="dormitoryid != null" >
+        dormitoryId = #{dormitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="buildingid != null" >
+        buildingId = #{buildingid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where maintainId = #{maintainid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Maintain" >
+    update maintain
+    set subtime = #{subtime,jdbcType=TIMESTAMP},
+      maintainTime = #{maintaintime,jdbcType=TIMESTAMP},
+      maintainStatu = #{maintainstatu,jdbcType=INTEGER},
+      maintainComment = #{maintaincomment,jdbcType=VARCHAR},
+      studentId = #{studentid,jdbcType=VARCHAR},
+      dormitoryId = #{dormitoryid,jdbcType=INTEGER},
+      buildingId = #{buildingid,jdbcType=INTEGER}
+    where maintainId = #{maintainid,jdbcType=INTEGER}
+  </update>
+</mapper>

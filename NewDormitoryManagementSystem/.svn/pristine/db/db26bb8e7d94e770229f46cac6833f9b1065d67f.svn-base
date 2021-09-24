@@ -1,0 +1,70 @@
+package com.sxau.dormitory.biz.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sxau.dormitory.biz.DormitoryBiz;
+import com.sxau.dormitory.entity.Building;
+import com.sxau.dormitory.entity.Dormitory;
+import com.sxau.dormitory.mapper.DormitoryMapper;
+import com.sxau.dormitory.util.PageSizeUtil;
+
+@Service(value="dormitoryBiz")
+public class DormitoryBizImpl implements DormitoryBiz {
+	@Autowired
+	private DormitoryMapper dormitoryMapper;
+
+	public DormitoryMapper getDormitoryMapper() {
+		return dormitoryMapper;
+	}
+
+	public void setDormitoryMapper(DormitoryMapper dormitoryMapper) {
+		this.dormitoryMapper = dormitoryMapper;
+	}
+
+	//自动插入宿舍的方法
+	@Override
+	public int insertDormitory(Dormitory dormitory, Building building) {
+		// TODO Auto-generated method stub
+		int x = 0;
+		int floorCount = building.getFloorcount();
+		int dormitoryCount = building.getDormitorycount();
+		for(int i=1;i<=floorCount;i++){
+			for(int j=1;j<=dormitoryCount;j++){
+				dormitory.setBedcount(dormitory.getBedcount());
+				dormitory.setBuildingid(building.getBuildingid());
+				dormitory.setDormitoryname(""+(i*100+j));	
+				int t = dormitoryMapper.insertDormitory(dormitory);
+				x= x+t;
+			}
+		}
+		return x;
+		
+	}
+
+	@Override
+	public List<Dormitory> findAllDormitory(Map<String,Object> map) {
+		List<Dormitory> dormitoryList = dormitoryMapper.findAllDormitory(map);
+		return dormitoryList;
+	}
+
+	@Override
+	public List<Dormitory> selectByBuildingId(Map<String, Integer> map) {
+		return dormitoryMapper.selectByBuildingId(map);
+	}
+
+	@Override
+	public int selectByBuildingIdTotalPage(Integer buildingid) {
+		int totalPage = dormitoryMapper.selectByBuildingIdTotalPage(buildingid);
+		if(totalPage%PageSizeUtil.PAGE_SIZE1==0){
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE1;
+		}else{
+			totalPage =totalPage/PageSizeUtil.PAGE_SIZE1+1;
+		}
+		return totalPage;
+	}
+	
+}

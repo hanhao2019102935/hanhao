@@ -1,0 +1,13 @@
+package com.sxau.dormitory.biz;
+
+import java.util.List;
+
+import com.sxau.dormitory.entity.Student;
+import com.sxau.dormitory.entity.Vistor;
+
+public interface ExcelBiz {
+	//excel查询所有学生
+	public List<Student> selectAllStudents();
+	//excel查询所有访客信息
+    public List<Vistor> selectAllVistor();
+}

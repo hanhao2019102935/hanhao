@@ -1,0 +1,125 @@
+package com.sxau.dormitory.entity;
+
+import java.util.Date;
+
+public class Vistor {
+    private Integer vistorid;
+
+    private String vistorname;
+
+    private String vistorsex;
+
+    private Date vistorcometime;
+
+    private Date vistorleavetime;
+
+    private String vistorreason;
+
+    private Integer dormitoryid;
+
+    private Integer buildingid;
+
+    private Integer studentid;
+    
+    private Building building;
+    
+    private Dormitory dormitory;
+    
+    private Student student;    
+
+    public Building getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(Building building) {
+		this.building = building;
+	}
+
+	public Dormitory getDormitory() {
+		return dormitory;
+	}
+
+	public void setDormitory(Dormitory dormitory) {
+		this.dormitory = dormitory;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public Integer getVistorid() {
+        return vistorid;
+    }
+
+    public void setVistorid(Integer vistorid) {
+        this.vistorid = vistorid;
+    }
+
+    public String getVistorname() {
+        return vistorname;
+    }
+
+    public void setVistorname(String vistorname) {
+        this.vistorname = vistorname == null ? null : vistorname.trim();
+    }
+
+    public String getVistorsex() {
+        return vistorsex;
+    }
+
+    public void setVistorsex(String vistorsex) {
+        this.vistorsex = vistorsex == null ? null : vistorsex.trim();
+    }
+
+    public Date getVistorcometime() {
+        return vistorcometime;
+    }
+
+    public void setVistorcometime(Date vistorcometime) {
+        this.vistorcometime = vistorcometime;
+    }
+
+    public Date getVistorleavetime() {
+        return vistorleavetime;
+    }
+
+    public void setVistorleavetime(Date vistorleavetime) {
+        this.vistorleavetime = vistorleavetime;
+    }
+
+    public String getVistorreason() {
+        return vistorreason;
+    }
+
+    public void setVistorreason(String vistorreason) {
+        this.vistorreason = vistorreason == null ? null : vistorreason.trim();
+    }
+
+    public Integer getDormitoryid() {
+        return dormitoryid;
+    }
+
+    public void setDormitoryid(Integer dormitoryid) {
+        this.dormitoryid = dormitoryid;
+    }
+
+    public Integer getBuildingid() {
+        return buildingid;
+    }
+
+    public void setBuildingid(Integer buildingid) {
+        this.buildingid = buildingid;
+    }
+
+    public Integer getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(Integer studentid) {
+        this.studentid = studentid;
+    }
+}

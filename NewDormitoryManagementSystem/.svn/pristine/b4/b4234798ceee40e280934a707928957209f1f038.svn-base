@@ -1,0 +1,29 @@
+package com.sxau.dormitory.mapper;
+
+import java.util.List;
+
+import com.sxau.dormitory.entity.Building;
+
+public interface BuildingMapper {
+	//根据buildingId删除楼宇
+    int deleteByBuildingId(Integer buildingid);
+
+    //添加楼宇的方法
+    int insertBuilding(Building record);
+
+    int insertSelective(Building record);
+
+    //根据楼宇名查询楼宇
+    Building selectByBuildingName(String buildingname);
+
+    //修改楼宇信息的方法
+    int updateBuilding(Building record);
+
+    int updateByPrimaryKey(Building record);
+    
+    //查询所有楼宇信息
+    List<Building> selectAllBuilding();
+    
+    //根据 id查询楼宇信息
+    Building selectByBuildingId(Integer buildingid);
+}

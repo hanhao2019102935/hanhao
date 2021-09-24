@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.VistorMapper" >
+  <resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Vistor" >
+    <id column="vistorId" property="vistorid" jdbcType="INTEGER" />
+    <result column="vistorName" property="vistorname" jdbcType="VARCHAR" />
+    <result column="vistorSex" property="vistorsex" jdbcType="VARCHAR" />
+    <result column="vistorCometime" property="vistorcometime" jdbcType="TIMESTAMP" />
+    <result column="vistorLeavetime" property="vistorleavetime" jdbcType="TIMESTAMP" />
+    <result column="vistorReason" property="vistorreason" jdbcType="VARCHAR" />
+    <result column="dormitoryId" property="dormitoryid" jdbcType="INTEGER" />
+    <result column="buildingId" property="buildingid" jdbcType="INTEGER" />
+    <result column="studentId" property="studentid" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="findVistorResultMap" type="com.sxau.dormitory.entity.Vistor" extends="BaseResultMap">
+  	<association property="dormitory" javaType="com.sxau.dormitory.entity.Dormitory">
+  		 <id column="d_dormitoryId" property="dormitoryid" jdbcType="INTEGER" />
+    	<result column="dormitoryName" property="dormitoryname" jdbcType="VARCHAR" />
+  	</association>
+  	<association property="building" javaType="com.sxau.dormitory.entity.Building">
+  		<id column="b_buildingId" property="buildingid" jdbcType="INTEGER" />
+		<result column="buildingName" property="buildingname" jdbcType="VARCHAR" />
+  	</association>
+  	<association property="student" javaType="com.sxau.dormitory.entity.Student">
+  		<id column="s_studentId" property="studentid" jdbcType="INTEGER" />
+		<result column="studentName" property="studentname" jdbcType="VARCHAR" />
+  	</association>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    vistorId, vistorName, vistorSex, vistorCometime, vistorLeavetime, vistorReason, dormitoryId, 
+    buildingId, studentId
+  </sql>
+  
+ <!--  分页查询访客信息的方法 -->
+ <select id="selectVistorPage" resultMap="findVistorResultMap" parameterType="map" >
+    select v.*,d.dormitoryName, b.buildingName ,s.studentName
+	from vistor v 
+	inner join dormitory d on v.buildingId=d.buildingId and v.dormitoryId=d.dormitoryId
+	inner join building b on v.buildingId = b.buildingId
+	inner join student s on v.studentId = s.studentId 
+	limit #{startIndex},#{pageSize}
+   <!--  limit (currentPage-1)*count,count; -->
+  </select>
+   <!-- 查询访客总页数 -->
+ <select id="selectVistorTotalPage" resultType="int">
+    select count(1)  from vistor 
+  </select>
+  
+  <!-- 插入访客记录  -->
+  <insert id="insertVistorRecord" parameterType="com.sxau.dormitory.entity.Vistor" >
+    insert into vistor (vistorId, vistorName, vistorSex, 
+      vistorCometime, vistorLeavetime, vistorReason, 
+      dormitoryId, buildingId, studentId
+      )
+    values (#{vistorid,jdbcType=INTEGER}, #{vistorname,jdbcType=VARCHAR}, #{vistorsex,jdbcType=VARCHAR}, 
+      #{vistorcometime,jdbcType=TIMESTAMP}, #{vistorleavetime,jdbcType=TIMESTAMP}, #{vistorreason,jdbcType=VARCHAR}, 
+      #{dormitoryid,jdbcType=INTEGER}, #{buildingid,jdbcType=INTEGER}, #{studentid,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vistor
+    where vistorId = #{vistorid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vistor
+    where vistorId = #{vistorid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sxau.dormitory.entity.Vistor" >
+    insert into vistor (vistorId, vistorName, vistorSex, 
+      vistorCometime, vistorLeavetime, vistorReason, 
+      dormitoryId, buildingId, studentId
+      )
+    values (#{vistorid,jdbcType=INTEGER}, #{vistorname,jdbcType=VARCHAR}, #{vistorsex,jdbcType=VARCHAR}, 
+      #{vistorcometime,jdbcType=TIMESTAMP}, #{vistorleavetime,jdbcType=TIMESTAMP}, #{vistorreason,jdbcType=VARCHAR}, 
+      #{dormitoryid,jdbcType=INTEGER}, #{buildingid,jdbcType=INTEGER}, #{studentid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Vistor" >
+    insert into vistor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vistorid != null" >
+        vistorId,
+      </if>
+      <if test="vistorname != null" >
+        vistorName,
+      </if>
+      <if test="vistorsex != null" >
+        vistorSex,
+      </if>
+      <if test="vistorcometime != null" >
+        vistorCometime,
+      </if>
+      <if test="vistorleavetime != null" >
+        vistorLeavetime,
+      </if>
+      <if test="vistorreason != null" >
+        vistorReason,
+      </if>
+      <if test="dormitoryid != null" >
+        dormitoryId,
+      </if>
+      <if test="buildingid != null" >
+        buildingId,
+      </if>
+      <if test="studentid != null" >
+        studentId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vistorid != null" >
+        #{vistorid,jdbcType=INTEGER},
+      </if>
+      <if test="vistorname != null" >
+        #{vistorname,jdbcType=VARCHAR},
+      </if>
+      <if test="vistorsex != null" >
+        #{vistorsex,jdbcType=VARCHAR},
+      </if>
+      <if test="vistorcometime != null" >
+        #{vistorcometime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vistorleavetime != null" >
+        #{vistorleavetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vistorreason != null" >
+        #{vistorreason,jdbcType=VARCHAR},
+      </if>
+      <if test="dormitoryid != null" >
+        #{dormitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="buildingid != null" >
+        #{buildingid,jdbcType=INTEGER},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Vistor" >
+    update vistor
+    <set >
+      <if test="vistorname != null" >
+        vistorName = #{vistorname,jdbcType=VARCHAR},
+      </if>
+      <if test="vistorsex != null" >
+        vistorSex = #{vistorsex,jdbcType=VARCHAR},
+      </if>
+      <if test="vistorcometime != null" >
+        vistorCometime = #{vistorcometime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vistorleavetime != null" >
+        vistorLeavetime = #{vistorleavetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vistorreason != null" >
+        vistorReason = #{vistorreason,jdbcType=VARCHAR},
+      </if>
+      <if test="dormitoryid != null" >
+        dormitoryId = #{dormitoryid,jdbcType=INTEGER},
+      </if>
+      <if test="buildingid != null" >
+        buildingId = #{buildingid,jdbcType=INTEGER},
+      </if>
+      <if test="studentid != null" >
+        studentId = #{studentid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where vistorId = #{vistorid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Vistor" >
+    update vistor
+    set vistorName = #{vistorname,jdbcType=VARCHAR},
+      vistorSex = #{vistorsex,jdbcType=VARCHAR},
+      vistorCometime = #{vistorcometime,jdbcType=TIMESTAMP},
+      vistorLeavetime = #{vistorleavetime,jdbcType=TIMESTAMP},
+      vistorReason = #{vistorreason,jdbcType=VARCHAR},
+      dormitoryId = #{dormitoryid,jdbcType=INTEGER},
+      buildingId = #{buildingid,jdbcType=INTEGER},
+      studentId = #{studentid,jdbcType=INTEGER}
+    where vistorId = #{vistorid,jdbcType=INTEGER}
+  </update>
+</mapper>

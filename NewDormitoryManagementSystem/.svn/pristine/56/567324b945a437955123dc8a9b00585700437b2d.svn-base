@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			@media screen and (min-width: 0px) and (max-width: 1400px) {
+				html{
+					font-size: 55%;
+				}		
+			}
+			@media only screen and (min-width: 1400px) and (max-width: 2000px) {
+				html{
+				font-size: 62.5%;
+				}
+			}
+			
+			body{
+				margin: 0px;
+				padding: 0px;
+				background-color: gainsboro;
+			}
+			#bodyDiv{
+				padding-top: 0.4%;
+			}
+			#bodyDiv p{
+				font-size: 1.4rem;
+				line-height: 90%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="bodyDiv">
+			<p align="center">版权所有：山西农业大学</p>
+			<p align="center">
+				高校寝室管理系统&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				地址：北京市海淀区  			
+			</p>
+		</div>
+	</body>
+</html>

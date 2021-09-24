@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+@media only screen and (min-width: 0px) and (max-width: 1400px) {
+				html{
+				font-size: 55%;
+				}
+			}
+			@media only screen and (min-width: 1400px) and (max-width: 2000px) {
+				html{
+				font-size: 62.5%;
+				}
+			}
+			body{
+				margin: 0px;
+				padding: 0px;
+				background-color: #000515;
+			}
+			
+			#bodyDiv {
+				margin: 0px;
+				padding: 0px;
+				padding-left: 2%;
+				padding-top: 1.2%;
+			}
+			#titleDiv{
+				float: left;
+			}
+			.title_1{
+				font-family: "黑体";
+				font-size: 3.5rem;
+				font-weight:bolder;
+				color: white;
+				line-height: 100%;
+			}
+			.title_2{
+				font-family: "黑体";
+				font-size: 1.47rem;
+				color: white;
+			}
+			#loginInfoDiv{
+				margin-top: 2%;
+				margin-left: 60%;
+				float: left;
+				color: white;
+				font-size: 1.5rem;
+			}
+			#loginInfoDiv a{
+				color: white;
+				font-style: none;
+				text-decoration: none;
+			}

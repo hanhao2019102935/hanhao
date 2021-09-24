@@ -1,0 +1,79 @@
+package com.sxau.dormitory.entity;
+
+public class Admin {
+    private Integer adminid;
+
+    private String adminphone;
+
+    private String phone;
+
+    private String adminpassword;
+
+    private String adminname;
+
+    private String adminsex;
+
+    private String sex;
+
+    private Integer buildingid;
+    
+    private String name;
+
+    public Integer getAdminid() {
+        return adminid;
+    }
+
+    public void setAdminid(Integer adminid) {
+        this.adminid = adminid;
+    }
+
+    public String getAdminphone() {
+        return adminphone;
+    }
+
+    public void setAdminphone(String adminphone) {
+        this.adminphone = adminphone == null ? null : adminphone.trim();
+    }
+
+    public String getAdminpassword() {
+        return adminpassword;
+    }
+
+    public void setAdminpassword(String adminpassword) {
+        this.adminpassword = adminpassword == null ? null : adminpassword.trim();
+    }
+
+    public String getAdminname() {
+        return adminname;
+    }
+
+    public void setAdminname(String adminname) {
+        this.adminname = adminname == null ? null : adminname.trim();
+    }
+
+    public String getAdminsex() {
+        return adminsex;
+    }
+
+    public void setAdminsex(String adminsex) {
+        this.adminsex = adminsex == null ? null : adminsex.trim();
+    }
+
+    public Integer getBuildingid() {
+        return buildingid;
+    }
+
+    public void setBuildingid(Integer buildingid) {
+        this.buildingid = buildingid;
+    }
+    
+    public String getName(){    	
+    	return this.name = adminname;
+    }
+    public String getPhone(){    	
+    	return this.phone = adminphone;
+    }
+    public String getSex(){    	
+    	return this.sex = adminsex;
+    }
+}

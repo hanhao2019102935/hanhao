@@ -1,0 +1,21 @@
+package com.sxau.dormitory.biz;
+
+import java.util.List;
+import java.util.Map;
+
+import com.sxau.dormitory.entity.Building;
+import com.sxau.dormitory.entity.Dormitory;
+
+public interface DormitoryBiz {
+	//插入宿舍
+	public int insertDormitory(Dormitory dormitory,Building building);
+	
+	//根据楼宇Id分页查询宿舍
+    List<Dormitory> selectByBuildingId(Map<String, Integer> map);
+    
+    //根据楼宇Id查询宿舍总页数
+    public int selectByBuildingIdTotalPage(Integer buildingid);
+    
+	//根据楼层数查询所有宿舍
+    public List<Dormitory> findAllDormitory(Map<String,Object> map);
+}

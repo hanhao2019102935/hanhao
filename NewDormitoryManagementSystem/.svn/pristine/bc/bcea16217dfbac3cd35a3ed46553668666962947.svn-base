@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.BuildingMapper">
+	<resultMap id="BaseResultMap" type="com.sxau.dormitory.entity.Building">
+		<id column="buildingId" property="buildingid" jdbcType="INTEGER" />
+		<result column="buildingName" property="buildingname" jdbcType="VARCHAR" />
+		<result column="dormitoryCount" property="dormitorycount"
+			jdbcType="INTEGER" />
+		<result column="floorCount" property="floorcount" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		buildingId, buildingName, dormitoryCount, floorCount
+	</sql>
+	
+	<!-- 修改楼宇信息的方法 -->
+	<update id="updateBuilding" parameterType="com.sxau.dormitory.entity.Building">
+		update building
+		<set>
+			<if test="buildingname != null">
+				buildingName = #{buildingname,jdbcType=VARCHAR},
+			</if>
+			<if test="dormitorycount != null">
+				dormitoryCount = #{dormitorycount,jdbcType=INTEGER},
+			</if>
+			<if test="floorcount != null">
+				floorCount = #{floorcount,jdbcType=INTEGER},
+			</if>
+		</set>
+		where buildingId = #{buildingid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 根据id查询楼宇信息的方法 -->
+	<select id="selectByBuildingId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from building
+		where buildingId = #{buildingid,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据楼宇名查询楼宇的方法 -->
+	<select id="selectByBuildingName" resultMap="BaseResultMap"	parameterType="String">
+		select
+		<include refid="Base_Column_List" />
+		from building
+		where buildingName = #{buildingname,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询所有楼宇信息的方法 -->
+	<select id="selectAllBuilding" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from building
+	</select>
+
+	<!-- 添加楼宇的方法 -->
+	<insert id="insertBuilding" parameterType="com.sxau.dormitory.entity.Building">
+		insert into building (buildingId, buildingName, dormitoryCount,
+		floorCount)
+		values (#{buildingid,jdbcType=INTEGER}, #{buildingname,jdbcType=VARCHAR},
+		#{dormitorycount,jdbcType=INTEGER},
+		#{floorcount,jdbcType=INTEGER})
+	</insert>
+
+	<!-- 删除楼宇的方法 -->
+	<delete id="deleteByBuildingId" parameterType="java.lang.Integer">
+		delete from building
+		where buildingId = #{buildingid,jdbcType=INTEGER}
+	</delete>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from building
+		where buildingId = #{buildingid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from building
+		where buildingId = #{buildingid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.sxau.dormitory.entity.Building">
+		insert into building (buildingId, buildingName, dormitoryCount,
+		floorCount)
+		values (#{buildingid,jdbcType=INTEGER}, #{buildingname,jdbcType=VARCHAR},
+		#{dormitorycount,jdbcType=INTEGER},
+		#{floorcount,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.sxau.dormitory.entity.Building">
+		insert into building
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="buildingid != null">
+				buildingId,
+			</if>
+			<if test="buildingname != null">
+				buildingName,
+			</if>
+			<if test="dormitorycount != null">
+				dormitoryCount,
+			</if>
+			<if test="floorcount != null">
+				floorCount,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="buildingid != null">
+				#{buildingid,jdbcType=INTEGER},
+			</if>
+			<if test="buildingname != null">
+				#{buildingname,jdbcType=VARCHAR},
+			</if>
+			<if test="dormitorycount != null">
+				#{dormitorycount,jdbcType=INTEGER},
+			</if>
+			<if test="floorcount != null">
+				#{floorcount,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.sxau.dormitory.entity.Building">
+		update building
+		<set>
+			<if test="buildingname != null">
+				buildingName = #{buildingname,jdbcType=VARCHAR},
+			</if>
+			<if test="dormitorycount != null">
+				dormitoryCount = #{dormitorycount,jdbcType=INTEGER},
+			</if>
+			<if test="floorcount != null">
+				floorCount = #{floorcount,jdbcType=INTEGER},
+			</if>
+		</set>
+		where buildingId = #{buildingid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.sxau.dormitory.entity.Building">
+		update building
+		set buildingName = #{buildingname,jdbcType=VARCHAR},
+		dormitoryCount = #{dormitorycount,jdbcType=INTEGER},
+		floorCount = #{floorcount,jdbcType=INTEGER}
+		where buildingId = #{buildingid,jdbcType=INTEGER}
+	</update>
+</mapper>

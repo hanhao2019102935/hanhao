@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxau.dormitory.mapper.AdminMapper">
+	<resultMap id="BaseResultMap"
+		type="com.sxau.dormitory.entity.Admin">
+		<id column="userId" property="userid" jdbcType="INTEGER" />
+		<result column="userName" property="username"
+			jdbcType="VARCHAR" />
+		<result column="password" property="password"
+			jdbcType="VARCHAR" />
+		<result column="workerId" property="workerid"
+			jdbcType="INTEGER" />
+		<result column="usertype" property="usertype"
+			jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="education" property="education"
+			jdbcType="INTEGER" />
+		<result column="otherone" property="otherone"
+			jdbcType="INTEGER" />
+		<result column="othertwo" property="othertwo"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		userId, userName, password, workerId, usertype, name, age,
+		sex, education,
+		otherone,
+		othertwo
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where userId = #{userid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 登录 -->
+	<select id="selectByUserNameAndPassword"
+		resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where userName = #{username} and password = #{password}
+	</select>
+
+	<!-- 查询 -->
+	<select id="selectByUser" resultMap="BaseResultMap" parameterType="com.sxau.dormitory.entity.Admin">
+		select
+		<include refid="Base_Column_List" />
+		from admin where 1=1
+		<if test="userid != null">
+			and userId = #{userid}
+		</if>
+		<if test="username != null">
+			and userName = #{username}
+		</if>
+		<if test="password != null">
+			and password = #{password}
+		</if>
+		<if test="workerid != null">
+			and workerId = #{workerid}
+		</if>
+		<if test="usertype != null">
+			and usertype = #{usertype}
+		</if>
+		<if test="name != null">
+			and name = #{name}
+		</if>
+		<if test="age != null">
+			and age = #{age}
+		</if>
+		<if test="sex != null">
+			and sex = #{sex}
+		</if>
+		<if test="education != null">
+			and education = #{education}
+		</if>
+		<if test="otherone != null">
+			and otherone = #{otherone}
+		</if>
+		<if test="othertwo != null">
+			and othertwo = #{othertwo}
+		</if>
+		
+	</select>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from admin
+		where userId =
+		#{userid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="com.sxau.dormitory.entity.Admin">
+		insert into admin (userId, userName, password,
+		workerId,
+		usertype, name,
+		age, sex, education,
+		otherone, othertwo)
+		values
+		(#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{workerid,jdbcType=INTEGER},
+		#{usertype,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{age,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER},
+		#{education,jdbcType=INTEGER},
+		#{otherone,jdbcType=INTEGER},
+		#{othertwo,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.sxau.dormitory.entity.Admin">
+		insert into admin
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				userId,
+			</if>
+			<if test="username != null">
+				userName,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="workerid != null">
+				workerId,
+			</if>
+			<if test="usertype != null">
+				usertype,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="education != null">
+				education,
+			</if>
+			<if test="otherone != null">
+				otherone,
+			</if>
+			<if test="othertwo != null">
+				othertwo,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="workerid != null">
+				#{workerid,jdbcType=INTEGER},
+			</if>
+			<if test="usertype != null">
+				#{usertype,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				#{age,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="education != null">
+				#{education,jdbcType=INTEGER},
+			</if>
+			<if test="otherone != null">
+				#{otherone,jdbcType=INTEGER},
+			</if>
+			<if test="othertwo != null">
+				#{othertwo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.sxau.dormitory.entity.Admin">
+		update admin
+		<set>
+			<if test="username != null">
+				userName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="workerid != null">
+				workerId = #{workerid,jdbcType=INTEGER},
+			</if>
+			<if test="usertype != null">
+				usertype = #{usertype,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				age = #{age,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="education != null">
+				education = #{education,jdbcType=INTEGER},
+			</if>
+			<if test="otherone != null">
+				otherone = #{otherone,jdbcType=INTEGER},
+			</if>
+			<if test="othertwo != null">
+				othertwo = #{othertwo,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where userId = #{userid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.sxau.dormitory.entity.Admin">
+		update admin
+		set userName = #{username,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		workerId =
+		#{workerid,jdbcType=INTEGER},
+		usertype = #{usertype,jdbcType=INTEGER},
+		name = #{name,jdbcType=VARCHAR},
+		age = #{age,jdbcType=INTEGER},
+		sex =
+		#{sex,jdbcType=INTEGER},
+		education = #{education,jdbcType=INTEGER},
+		otherone = #{otherone,jdbcType=INTEGER},
+		othertwo =
+		#{othertwo,jdbcType=VARCHAR}
+		where userId = #{userid,jdbcType=INTEGER}
+	</update>
+</mapper>

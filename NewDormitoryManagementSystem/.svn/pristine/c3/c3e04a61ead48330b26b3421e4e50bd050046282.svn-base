@@ -1,0 +1,20 @@
+package com.sxau.dormitory.biz;
+
+import java.util.List;
+
+import com.sxau.dormitory.entity.Vistor;
+
+public interface VistorBiz {
+	
+	public int insertVistorRecord(Vistor record);
+	
+	//分页查询
+    public List<Vistor> selectVistorPage(int start,int count);
+    
+    //查询学生总页数
+    public int selectVistorTotalPage();
+    
+    //删除访客记录
+    public int deleteByVistorId(Integer vistorid);
+
+}

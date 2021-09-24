@@ -1,0 +1,81 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<base href=" <%=basePath%>">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>注册页面</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="css/registerStyle.css" rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/register.js"></script>
+
+</head>
+
+<body>
+	<div id="headDiv">
+		<img src="img/logo.png" />
+	</div>
+	<div id="bodyDiv">
+		<form action="admin/addAdmin.do" method="post" onsubmit="return submitAll()">
+			<div id="box">
+				<table cellspacing="0px" cellpadding="0px">
+					<tr>
+						<td>用&nbsp;&nbsp;户&nbsp;&nbsp; 名</td>
+						<td colspan="3"><input type="text" class="input" onblur="checkUser()"
+							placeholder=" 请使用手机号注册" id="user" name="adminphone"/></td>
+					</tr>
+					<tr>
+						<td>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</td>
+						<td colspan="3"><input type="password" class="input" onblur="checkPass()"
+							placeholder=" 请输入6位以上密码" id="pass" /></td>
+					</tr>
+					<tr>
+						<td>确认密码</td>
+						<td colspan="3"><input type="password" class="input" onblur="secondCheckPass()"
+							placeholder=" 再次输入相同的密码" id="secondPass" name="adminpassword" /></td>
+					</tr>
+					<tr>
+						<td>真实姓名</td>
+						<td colspan="3"><input type="text" class="input" onblur="checkName()"
+							placeholder=" 请输入您的姓名" id="name" name="adminname" /></td>
+					</tr>
+					<tr>
+						<td>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</td>
+						<td>
+							<input type="radio" name="adminsex" value="男" />男
+						    <input type="radio" name="adminsex" value="女" />女
+						</td>
+						<td>楼宇选择</td>
+						<td>
+							<select id="building" name="buildingid">
+								<option>---选择公寓---</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="3"><input class="submit" type="submit" id="submitBtn"
+							value="注   册" /> <input class="reset" type="reset" value="重   置" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" align="right" class="loginMsg"><a
+							href="login.jsp">已有账号，立即登录</a></td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>
+	<div id="footDiv">
+		<p>毕业设计 高校寝室管理系统 v1.0</p>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title></title>
+		<style type="text/css">
+			@media only screen and (min-width: 0px) and (max-width: 1400px) {
+				html{
+				font-size: 55%;
+				}
+			}
+			@media only screen and (min-width: 1400px) and (max-width: 2000px) {
+				html{
+				font-size: 62.5%;
+				}
+			}
+			p{
+				margin-top: 15%;
+				font-weight: 900;
+				font-size: 12rem;
+				color: #1044CD;
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<p>欢迎使用</p>
+			
+		</center>
+		
+	</body>
+</html>

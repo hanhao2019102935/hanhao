@@ -1,0 +1,115 @@
+package com.sxau.dormitory.entity;
+
+public class Student {
+    private Integer studentid;
+
+    private String studyid;
+
+    private Integer buildingid;
+
+    private Integer dormitoryid;
+
+    private String studentpassword;
+
+    private String studentname;
+    
+    private String studentsex;
+
+    private String institute;
+
+    private String major;
+    
+    private Dormitory dormitory;
+    
+    private Building building;
+    
+
+	public Building getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(Building building) {
+		this.building = building;
+	}
+
+	public Dormitory getDormitory() {
+		return dormitory;
+	}
+
+	public void setDormitory(Dormitory dormitory) {
+		this.dormitory = dormitory;
+	}
+
+	public Integer getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(Integer studentid) {
+        this.studentid = studentid;
+    }
+
+    public String getStudyid() {
+        return studyid;
+    }
+
+    public void setStudyid(String studyid) {
+        this.studyid = studyid == null ? null : studyid.trim();
+    }
+
+    public Integer getBuildingid() {
+        return buildingid;
+    }
+
+    public void setBuildingid(Integer buildingid) {
+        this.buildingid = buildingid;
+    }
+
+    public Integer getDormitoryid() {
+        return dormitoryid;
+    }
+
+    public void setDormitoryid(Integer dormitoryid) {
+        this.dormitoryid = dormitoryid;
+    }
+
+    public String getStudentpassword() {
+        return studentpassword;
+    }
+
+    public void setStudentpassword(String studentpassword) {
+        this.studentpassword = studentpassword == null ? null : studentpassword.trim();
+    }
+
+    public String getStudentname() {
+        return studentname;
+    }
+
+    public void setStudentname(String studentname) {
+        this.studentname = studentname == null ? null : studentname.trim();
+    }
+
+    public String getStudentsex() {
+        return studentsex;
+    }
+
+    public void setStudentsex(String studentsex) {
+        this.studentsex = studentsex == null ? null : studentsex.trim();
+    }
+
+    public String getInstitute() {
+        return institute;
+    }
+
+    public void setInstitute(String institute) {
+        this.institute = institute == null ? null : institute.trim();
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major == null ? null : major.trim();
+    }
+    
+}
